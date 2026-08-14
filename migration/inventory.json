@@ -1,0 +1,106 @@
+{
+  "format": "mncds-repository-migration-inventory-0.1",
+  "source_repository": "epi13/machine-native-complexity-standard",
+  "bootstrap_observed_source_commit": "f0088c4d46dec84f289d9b4417eec32b0ac028e6",
+  "source_commit_policy": "Refresh and pin the actual source commit at migration time; do not treat bootstrap_observed_source_commit as a frozen migration source.",
+  "target_repository": "epi13/machine-native-complexity-development-specification",
+  "dispositions": [
+    "MOVE",
+    "KEEP_IN_MNCS",
+    "SHARED_INTERFACE",
+    "SPLIT",
+    "REVIEW_REQUIRED"
+  ],
+  "items": [
+    {
+      "source": "spec/MNCDS-v0.1-draft.md",
+      "target": "spec/MNCDS-v0.1-draft.md",
+      "disposition": "MOVE",
+      "reason": "MNCDS normative historical specification"
+    },
+    {
+      "source": "spec/MNCDS-v0.1-rc.1.md",
+      "target": "spec/MNCDS-v0.1-rc.1.md",
+      "disposition": "MOVE",
+      "reason": "current MNCDS 0.1 release-candidate specification"
+    },
+    {
+      "source": "spec/MNCDS-v0.1-records-and-decisions.md",
+      "target": "spec/MNCDS-v0.1-records-and-decisions.md",
+      "disposition": "MOVE",
+      "reason": "MNCDS records and design decisions"
+    },
+    {
+      "source": "spec/MNCS-v0.3-MNCDS-v0.1-decisions.md",
+      "target": null,
+      "disposition": "REVIEW_REQUIRED",
+      "reason": "historical mixed-authority decision record; preserve provenance and decide archival/cross-link strategy"
+    },
+    {
+      "source": "schemas/mncds-development-record-0.1.schema.json",
+      "target": "schemas/mncds-development-record-0.1.schema.json",
+      "disposition": "MOVE",
+      "reason": "versioned MNCDS aggregate schema"
+    },
+    {
+      "source": "schemas/mncds-development-record.schema.json",
+      "target": "schemas/mncds-development-record.schema.json",
+      "disposition": "MOVE",
+      "reason": "historical/current MNCDS development-record schema surface"
+    },
+    {
+      "source": "schemas/mncs-*",
+      "target": null,
+      "disposition": "KEEP_IN_MNCS",
+      "reason": "MNCS-owned schema namespace unless an individual artifact is proven to be an MNCDS-owned interface"
+    },
+    {
+      "source": "examples/mncds-0.1-rc/**",
+      "target": "examples/mncds-0.1-rc/**",
+      "disposition": "MOVE",
+      "reason": "MNCDS release-candidate examples referenced by the current MNCS repository README"
+    },
+    {
+      "source": "conformance/release-candidate/**",
+      "target": "conformance/**",
+      "disposition": "SPLIT",
+      "reason": "historical corpus is described as shared MNCS/MNCDS vectors; separate by normative owner and preserve explicit interoperability cases"
+    },
+    {
+      "source": "src/mncs_validator/**",
+      "target": "src/**",
+      "disposition": "SPLIT",
+      "reason": "historical validator implementation mixes MNCS and MNCDS surfaces; extract MNCDS behavior while preserving fixture outcomes"
+    },
+    {
+      "source": "tests/**",
+      "target": "tests/**",
+      "disposition": "SPLIT",
+      "reason": "move MNCDS-specific tests, keep MNCS-specific tests, and classify integration tests explicitly"
+    },
+    {
+      "source": "rfcs/**",
+      "target": "rfcs/**",
+      "disposition": "REVIEW_REQUIRED",
+      "reason": "classify each RFC by normative subject; mixed historical RFCs require provenance-preserving treatment"
+    },
+    {
+      "source": "docs/**",
+      "target": "docs/**",
+      "disposition": "REVIEW_REQUIRED",
+      "reason": "move MNCDS-owned guidance, keep MNCS-owned guidance, and rewrite only future-facing cross-project navigation"
+    },
+    {
+      "source": "case-studies/**",
+      "target": "case-studies/**",
+      "disposition": "REVIEW_REQUIRED",
+      "reason": "case studies may exercise MNCS, MNCDS, or both; ownership should follow the primary normative purpose rather than file naming"
+    },
+    {
+      "source": "execution-assurance and other mncs-test-evidence surfaces",
+      "target": null,
+      "disposition": "SHARED_INTERFACE",
+      "reason": "keep owning semantics with MNCS unless a specific MNCDS validator surface is independently specified; consume through explicit versioned bindings"
+    }
+  ]
+}
