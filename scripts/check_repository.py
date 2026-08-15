@@ -100,7 +100,7 @@ def main() -> int:
         required_phrases = [
             "independently versioned, governed, and released",
             "Machine-Native Complexity Standard (MNCS)",
-            "Repository bootstrap in progress",
+            "canonical home of MNCDS",
         ]
         for phrase in required_phrases:
             if phrase not in text:

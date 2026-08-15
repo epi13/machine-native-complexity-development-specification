@@ -3,7 +3,7 @@
 # Machine-Native Complexity Development Specification 0.1-rc.1
 
 Status: release-candidate proposal under Draft RFC 0004. It is not Accepted or Final.
-Normative terms use RFC 2119/8174 meanings from `normative-language.md`.
+Normative terms use RFC 2119/8174 meanings from [`normative-language.md`](normative-language.md).
 
 ## 1. Scope and relationship to MNCS
 
