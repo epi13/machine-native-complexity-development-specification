@@ -33,6 +33,13 @@ D1 requires one aggregate development record containing:
 Separate ledgers and role records may be introduced later, but the aggregate record is the
 minimum interoperable unit for 0.1.
 
+## Implementation identity
+
+Development systems that select generators or evaluators should treat
+implementation identity as data. Capability claims, observed evidence, and
+policy preferences remain distinct. See
+[implementation-identity.md](implementation-identity.md).
+
 ## Stochastic reproducibility
 
 MNCDS uses five declared classes:
