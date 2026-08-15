@@ -1,9 +1,18 @@
 # Specification
 
-This directory is the home of normative MNCDS specification text.
+This directory is the canonical home of normative MNCDS specification text.
 
-During extraction, preserve historical filenames and version identities such as `MNCDS-v0.1-draft.md` and `MNCDS-v0.1-rc.1.md`. Do not silently rewrite a historical release candidate into a new repository-native edition.
+Current files:
 
-Future versions SHOULD use stable versioned filenames and release notes that identify accepted RFCs, compatibility, known limitations, and the supported MNCS interoperability envelope.
+- [`MNCDS-v0.1-draft.md`](MNCDS-v0.1-draft.md) — historical draft lifecycle and cumulative profiles
+- [`MNCDS-v0.1-rc.1.md`](MNCDS-v0.1-rc.1.md) — current independently consumable release candidate
+- [`MNCDS-v0.1-records-and-decisions.md`](MNCDS-v0.1-records-and-decisions.md) — aggregate record and decision semantics
 
-Normative changes require the process in `GOVERNANCE.md`. Editorial fixes that do not change meaning should still preserve released artifacts and issue corrected successor material where necessary.
+These files were extracted from `epi13/machine-native-complexity-standard` commit
+`f0088c4d46dec84f289d9b4417eec32b0ac028e6`. Historical filenames and version
+identities are preserved.
+
+MNCS 0.3 may bind to an MNCDS object. That binding does not move MNCDS
+normative authority back into MNCS.
+
+Normative changes require `GOVERNANCE.md`.

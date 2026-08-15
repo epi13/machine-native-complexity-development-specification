@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mncds-validator"
+version = "0.1.0rc1"
+description = "Offline validator and schemas for the Machine-Native Complexity Development Specification"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{name = "MNCS Contributors"}]
+keywords = ["mncds", "machine-native-development", "software-standards"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+  "jsonschema>=4.23,<5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<10",
+  "ruff==0.16.0",
+]
+
+[project.scripts]
+mncds = "mncds_validator.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/epi13/machine-native-complexity-development-specification"
+Repository = "https://github.com/epi13/machine-native-complexity-development-specification"
+Issues = "https://github.com/epi13/machine-native-complexity-development-specification/issues"
+MNCS = "https://github.com/epi13/machine-native-complexity-standard"
+Atlas = "https://github.com/epi13/mncs-atlas"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"mncds_validator.resources.schemas" = ["*.json"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

@@ -1,0 +1,1 @@
+"""Packaged MNCDS resources."""

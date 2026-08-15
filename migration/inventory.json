@@ -102,5 +102,7 @@
       "disposition": "SHARED_INTERFACE",
       "reason": "keep owning semantics with MNCS unless a specific MNCDS validator surface is independently specified; consume through explicit versioned bindings"
     }
-  ]
+  ],
+  "frozen_source_commit": "f0088c4d46dec84f289d9b4417eec32b0ac028e6",
+  "migration_date": "2026-08-15"
 }

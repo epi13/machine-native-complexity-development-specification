@@ -1,6 +1,12 @@
 # MNCDS Extraction from the Historical MNCS Repository
 
-This repository is being established before the normative MNCDS material is extracted from `epi13/machine-native-complexity-standard`.
+This repository now holds the canonical MNCDS 0.1 specification, schemas,
+examples, RFC 0004, and a standalone `mncds` validator extracted from
+`epi13/machine-native-complexity-standard` commit
+`f0088c4d46dec84f289d9b4417eec32b0ac028e6`.
+
+The remaining work is to keep the MNCS-side consumer compatible and to avoid
+reintroducing a second authoritative copy of MNCDS meaning.
 
 The goal is **not** to fork MNCS. The goal is to make the existing conceptual separation between MNCS and MNCDS real at the repository, release, governance, validator, and conformance layers.
 
