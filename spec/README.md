@@ -4,6 +4,7 @@ This directory is the canonical home of normative MNCDS specification text.
 
 Current files:
 
+- [`normative-language.md`](normative-language.md) — local MUST/SHOULD/PASS/FAIL/UNKNOWN vocabulary
 - [`MNCDS-v0.1-draft.md`](MNCDS-v0.1-draft.md) — historical draft lifecycle and cumulative profiles
 - [`MNCDS-v0.1-rc.1.md`](MNCDS-v0.1-rc.1.md) — current independently consumable release candidate
 - [`MNCDS-v0.1-records-and-decisions.md`](MNCDS-v0.1-records-and-decisions.md) — aggregate record and decision semantics
