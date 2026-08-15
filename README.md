@@ -4,7 +4,22 @@
 
 MNCDS governs how machine-native implementations are created, evaluated, selected, released, monitored, regenerated, replaced, and retired. It is a companion to the [Machine-Native Complexity Standard (MNCS)](https://github.com/epi13/machine-native-complexity-standard), but it is **independently versioned, governed, and released**.
 
-> **Repository bootstrap in progress.** The normative MNCDS 0.1 release-candidate material currently lives in the MNCS repository and will be migrated here under an explicit provenance-preserving plan. Until that migration is completed and validated, this repository does not supersede the existing MNCDS source material.
+This repository is the canonical home of MNCDS 0.1-draft, MNCDS 0.1-rc.1, the development-record schemas, and the MNCDS-owned reference validator.
+
+## What belongs here
+
+- development-process semantics and profiles (D1–D4)
+- development records, authority, lineage, partitions, selection, release, monitoring, regeneration, and retirement
+- MNCDS schemas, conformance vectors, and the `mncds` validator
+- RFCs that change MNCDS meaning
+
+## What does not belong here
+
+- MNCS implementation-evidence acceptance rules
+- operator infrastructure such as MNCS Harness, MNCS Control MCP, MNCS Fabric, or MNCS Commons
+- Forge workflows, RAVEL/MNEL research, or reference-study implementations
+
+Those projects may *produce* MNCDS records. They do not own MNCDS meaning.
 
 ## Core boundary
 
@@ -14,41 +29,52 @@ MNCDS governs how machine-native implementations are created, evaluated, selecte
 
 Those responsibilities interact through explicit, versioned bindings. Neither project silently owns or rewrites the other's normative meaning.
 
-## Design principles
-
-1. **Independent normative authority.** MNCDS changes are reviewed and released here.
-2. **Explicit interoperability.** Dependencies on MNCS use versioned contracts and identities rather than source duplication.
-3. **Process evidence is first-class.** Candidate lineage, partitions, authority, selection, reproducibility, release, and lifecycle state remain inspectable artifacts.
-4. **Unknown stays unknown.** Missing, inaccessible, unsupported, crashed, or timed-out evidence does not become `PASS`.
-5. **History is immutable.** Corrections create new records and preserve superseded identities.
-6. **Tool neutrality.** Models, generators, analyzers, compilers, providers, benchmarks, languages, Forge, RAVEL, and case studies are implementations or research mechanisms, not normative authorities.
-7. **No self-promotion.** Generators, evaluators, orchestration systems, and recursive agents cannot silently broaden authority or promote their own results.
-
-## Repository map
-
-- `spec/` — normative and release-candidate MNCDS specification text.
-- `schemas/` — versioned machine-readable MNCDS schemas.
-- `conformance/` — valid/invalid vectors and release-candidate conformance corpora.
-- `rfcs/` — proposals that change normative meaning, governance, or interoperability.
-- `docs/` — architecture, rationale, migration, and non-normative guidance.
-- `migration/` — provenance and transfer planning for material currently housed in the MNCS repository.
-- `scripts/` — repository and conformance support tooling; tools are non-normative unless a specification explicitly says otherwise.
+A reader can understand MNCS without first understanding this repository. MNCDS may require an MNCS result only when a record declares an MNCS binding.
 
 ## Status
 
 - Project: **Machine-Native Complexity Development Specification**
 - Acronym: **MNCDS**
 - Current specification line: **0.1**
-- Current source release candidate: **0.1-rc.1**, pending migration from the MNCS repository
+- Current release candidate: **0.1-rc.1**
 - Maturity: **experimental / pre-1.0**
 - License: **Apache-2.0**
+- Historical source: extracted from [`epi13/machine-native-complexity-standard`](https://github.com/epi13/machine-native-complexity-standard) commit `f0088c4d46dec84f289d9b4417eec32b0ac028e6`
 
-The current migration source is [`epi13/machine-native-complexity-standard`](https://github.com/epi13/machine-native-complexity-standard). See [`MIGRATION.md`](MIGRATION.md) for the transfer boundary and [`INTEROPERABILITY.md`](INTEROPERABILITY.md) for the long-term MNCS ↔ MNCDS relationship.
+See [`MIGRATION.md`](MIGRATION.md) and [`INTEROPERABILITY.md`](INTEROPERABILITY.md).
 
-## Contributing
+## Validate a record
 
-Read [`CONTRIBUTING.md`](CONTRIBUTING.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`AGENTS.md`](AGENTS.md) before changing normative material. Normative changes require explicit review and must not be smuggled in as migration cleanup.
+```bash
+python3 -m pip install -e '.[dev]'
+mncds validate examples/mncds-0.1-rc/development-record.json --json
+mncds validate examples/mncds-d4/development-record.json --require-pass
+```
+
+The validator checks the declared record and invariants. It does not launch generators, evaluators, models, Forge, Fabric, or Harness.
+
+## Repository map
+
+- `spec/` — normative MNCDS 0.1-draft and 0.1-rc.1 text
+- `schemas/` — versioned machine-readable MNCDS schemas
+- `examples/` — development-record examples
+- `conformance/` — MNCDS-owned corpora
+- `rfcs/` — proposals that change MNCDS meaning
+- `docs/` — architecture, rationale, and non-normative guidance
+- `src/mncds_validator/` — reference `mncds` CLI
+
+## Family relationships
+
+Family orientation lives in [MNCS Atlas](https://github.com/epi13/mncs-atlas). Atlas is descriptive.
+
+| Project | Relationship to MNCDS |
+|---|---|
+| MNCS | sibling standard for implementation-evidence acceptance |
+| MNCS Forge | may produce or evaluate development evidence; not an authority |
+| MNCS Validator (in MNCS / Rust) | may consume MNCDS records as a shared interface |
+| MNCS Harness, Control, Fabric, Commons | operator/implementation ecosystem; not required by MNCDS |
+| RAVEL / MNEL / Reference Studies | research and empirical work that may emit MNCDS records |
 
 ## Non-claims
 
-MNCDS is experimental. It is not accredited certification, a security warranty, organizational independence, protected custody, or proof that a development process is safe or correct. A validator can check declared records and invariants; it cannot manufacture missing real-world evidence or authority.
+MNCDS is experimental. It is not accredited certification, a security warranty, organizational independence, protected custody, or proof that a development process is safe or correct.
