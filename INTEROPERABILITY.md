@@ -50,6 +50,30 @@ When one project evolves:
 
 No synchronized release cadence is required. MNCDS 0.x may support multiple MNCS versions, and MNCS may exist independently of MNCDS.
 
+## Family producer references (RFC 0005, experimental)
+
+MNCDS 0.2-alpha.1 records may cite any producer-native record through a
+versioned `producer_bindings` entry (producer, record kind, native schema
+version, stable identity, optional digest/artifact locator, declared scope,
+compatibility status, evidence status). The field names deliberately mirror the
+MNCS-Commons producer reference (`commons.mncs.dev/producer-reference/v0alpha1`)
+so family bindings round-trip without translation.
+
+Rules carried over unchanged:
+
+- MNCDS validates binding form, role eligibility, subject/partition identity
+  agreement, and tri-state propagation only.
+- Producer-native meaning is never imported or reinterpreted; Commons storage
+  or indexing of an MNCDS record transfers no semantic authority.
+- A rerun under changed identities is a descendant binding with non-empty
+  `declared_changes`.
+- Validation remains offline; producers are never contacted by the normative
+  validator.
+
+The Commons `DevelopmentRecord` projection stores a validated record's exact
+identity and digest and links it to experiment/evaluation/candidate references;
+it is descriptive, not an additional authority layer.
+
 ## Shared code
 
 Shared implementation code is permitted, but shared code does not create shared normative authority. If both validators need a canonicalization, identity, archive, or transport implementation, prefer a clearly versioned library or duplicated non-normative implementation over ambiguous ownership of specification text.

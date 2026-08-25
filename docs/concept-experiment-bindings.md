@@ -1,6 +1,6 @@
 # Concept Experiment Bindings into MNCDS
 
-Status: architecture proposal / non-normative
+Status: implemented as the experimental RFC 0005 binding surface (`MNCDS 0.2-alpha.1`); this document remains background rationale
 
 ## Purpose
 
@@ -69,6 +69,10 @@ raw compiler/execution/evaluator evidence
 
 Each upper layer references exact lower-layer identities. MNCDS does not reinterpret MNCS assurance semantics, and MNCS does not absorb MNCDS development-process semantics.
 
-## Initial implementation direction
+## Implementation note
 
-Before making any normative MNCDS change, exercise a non-normative example binding with a tiny CRE such as the MNCS tri-state result lattice. Use that exercise to determine the smallest stable binding fields actually needed. Only promote fields into normative schema text through the MNCDS RFC/governance process if repeated evidence justifies it.
+The smallest stable fields identified by real use are now specified in
+[`rfcs/0005-versioned-producer-record-bindings.md`](../rfcs/0005-versioned-producer-record-bindings.md)
+and exercised end-to-end by `examples/mncds-0.2-alpha/language-span-fix.development-record.json`
+(a reconstructed mncs-language development episode) plus the MNCS-Commons
+Family Record Spine exercise.
