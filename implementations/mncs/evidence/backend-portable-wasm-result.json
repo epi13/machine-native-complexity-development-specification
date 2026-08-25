@@ -1,0 +1,2874 @@
+{
+  "schema_version": "0.1",
+  "contract_id": "mncs:language:experiment-result:0.1",
+  "identity": "mncs:language:experiment:result:6db2282bd3daf2268d91cd18fc678072a4b87fb4f7bcb006fbb6be7d31d09c40",
+  "definition_identity": "mncs:language:experiment:definition:6ae5da11e78901448641183e2f8f41c0fed4092695f42fb413a9329ea4b24685",
+  "definition": {
+    "schema_version": "0.1",
+    "contract_id": "mncs:language:experiment-definition:0.1",
+    "identity": "mncs:language:experiment:definition:6ae5da11e78901448641183e2f8f41c0fed4092695f42fb413a9329ea4b24685",
+    "name": "development",
+    "source_artifact_identity": "mncs:source:artifact:ef0f0753be44c93fb13cbeca85f3441caf9d08260402dcca00d35b3d7c88501f",
+    "source_profile": "0.6",
+    "compiler_identity": "mncs:compiler:compiler:f862227638ca7fbc716123d8378cddfef4f76a9ef10ab0e99cc791e65207e45d",
+    "compiler_configuration": {
+      "backend": "mncs-portable-wasm-mvp"
+    },
+    "realization": {
+      "schema_version": "0.1",
+      "identity": "mncs:compiler:realization-request:015c42405cc854f6cf3c81befb1b8b57dd91adbe6f6c3e575bd026a48c740b1d",
+      "selected_ssa": {
+        "identity": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+        "representation": "selected_ssa",
+        "schema_version": "0.4",
+        "fingerprint": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551"
+      },
+      "target": {
+        "identity": "mncs:compiler:target-contract:7db47a6485cddf8e3bbaa129f3cc126ee396c799b7ff1fb243a0b1bb4663f902",
+        "candidate": "mncs:target:portable-wasm-mvp-0.1",
+        "facts": {
+          "abi": "one exported wasm function per MNCS function; scalars pass directly, composites pass as pointers to arena cells",
+          "bounded-iteration": "language-owned bounded SSA backedges use the private dispatcher loop; iteration metadata remains selected-SSA-bound",
+          "data-layout": "scalar two's-complement; i8/i16/i32 in wasm i32; i64 in wasm i64; composites are immutable 8-byte-slot cells in linear memory addressed by i32 pointers",
+          "integer": "wrapping=wasm wrapping; checked=explicit overflow test then trap; saturating=explicit clamp; widening=exact extended-width arithmetic",
+          "trap": "failure terminators and checked overflow map to wasm unreachable"
+        },
+        "evidence": [
+          "mncs:target-evidence:portable-wasm-mvp-0.1:declared-research-contract"
+        ],
+        "assumptions": [
+          "portable WASM MVP is a research execution envelope, not a native ABI",
+          "the embedded interpreter defines research execution, not a host wasm CLI"
+        ]
+      },
+      "acceptable_backends": [
+        {
+          "identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+          "name": "mncs-portable-wasm-mvp",
+          "version": "0.1"
+        }
+      ],
+      "required_machine_intents": [
+        "checked_integer",
+        "explicit_failure"
+      ],
+      "required_artifact_kinds": [
+        "wasm_module"
+      ],
+      "required_validators": [
+        "bounded_execution_agreement"
+      ],
+      "fallback_policy": "fail_closed_no_backend_fallback"
+    },
+    "corpus": {
+      "schema_version": "0.1",
+      "name": "mncds-family-development",
+      "cases": [
+        {
+          "id": "contribution-developmentfeedback-pass",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                  "discriminant": 0
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-developmentfeedback-fail",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                  "discriminant": 0
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-developmentfeedback-unknown",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                  "discriminant": 0
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-selectionevidence-pass",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                  "discriminant": 1
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-selectionevidence-fail",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                  "discriminant": 1
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-selectionevidence-unknown",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                  "discriminant": 1
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                "discriminant": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-finalevaluation-pass",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-finalevaluation-fail",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-finalevaluation-unknown",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                "discriminant": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-reproduction-pass",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                  "discriminant": 3
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-reproduction-fail",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                  "discriminant": 3
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-reproduction-unknown",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                  "discriminant": 3
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-diagnostic-pass",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+                  "discriminant": 4
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-diagnostic-fail",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+                  "discriminant": 4
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "contribution-diagnostic-unknown",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "contribution"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+                  "discriminant": 4
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback-eligible-developmentfeedback",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "same_epoch_feedback_eligible"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback-eligible-selectionevidence",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "same_epoch_feedback_eligible"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback-eligible-finalevaluation",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "same_epoch_feedback_eligible"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback-eligible-reproduction",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "same_epoch_feedback_eligible"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                  "discriminant": 3
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback-eligible-diagnostic",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "same_epoch_feedback_eligible"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+                  "discriminant": 4
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "is-evidentiary-developmentfeedback",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "is_evidentiary"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                  "discriminant": 0
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "is-evidentiary-selectionevidence",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "is_evidentiary"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                  "discriminant": 1
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "is-evidentiary-finalevaluation",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "is_evidentiary"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                  "discriminant": 2
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "is-evidentiary-reproduction",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "is_evidentiary"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                  "discriminant": 3
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "is-evidentiary-diagnostic",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "is_evidentiary"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+                  "discriminant": 4
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "boolean": {
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-fail-reject-false",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+                  "discriminant": 0
+                }
+              },
+              {
+                "boolean": {
+                  "value": false
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-fail-review-true",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                  "discriminant": 1
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+                  "discriminant": 1
+                }
+              },
+              {
+                "boolean": {
+                  "value": true
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-unknown-reject-false",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+                  "discriminant": 0
+                }
+              },
+              {
+                "boolean": {
+                  "value": false
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-unknown-reject-true",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+                  "discriminant": 0
+                }
+              },
+              {
+                "boolean": {
+                  "value": true
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-unknown-review-true",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+                  "discriminant": 1
+                }
+              },
+              {
+                "boolean": {
+                  "value": true
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                "discriminant": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-unknown-review-false",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+                  "discriminant": 2
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+                  "discriminant": 1
+                }
+              },
+              {
+                "boolean": {
+                  "value": false
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "discriminant": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-pass-reject-false",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+                  "discriminant": 0
+                }
+              },
+              {
+                "boolean": {
+                  "value": false
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "selection-pass-review-true",
+          "request": {
+            "schema_version": "0.1",
+            "target": {
+              "module": "mncs.family.development.v01",
+              "function": "selection_outcome"
+            },
+            "arguments": [
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                  "discriminant": 0
+                }
+              },
+              {
+                "finite": {
+                  "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+                  "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+                  "discriminant": 1
+                }
+              },
+              {
+                "boolean": {
+                  "value": true
+                }
+              }
+            ],
+            "step_budget": 1024,
+            "policy": {
+              "effects": "unsupported"
+            }
+          },
+          "expected": [
+            {
+              "finite": {
+                "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+                "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "discriminant": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "validators": [
+      {
+        "relation": "bounded_observational_agreement",
+        "validator_profile": "backend-lowering-bounded-agreement:0.1",
+        "required": true,
+        "allow_unknown": false
+      }
+    ],
+    "requested_result_artifacts": [
+      "backend_artifact",
+      "case_observations",
+      "compiler_study",
+      "realization_plan",
+      "translation_validation"
+    ],
+    "expected_invariants": [
+      "FAIL_dominates_UNKNOWN_dominates_PASS",
+      "source_to_ssa_identity_chain_is_exact"
+    ],
+    "comparison_relation": "bounded_public_behavior_agreement",
+    "environment_observations_are_non_semantic": true,
+    "parent_experiment": null,
+    "provenance": []
+  },
+  "compiler_study": {
+    "schema_version": "0.1",
+    "contract_id": "mncs:language:compilation-study-result:0.1",
+    "identity": "mncs:compiler:compilation-study-result:f857b200fb423c64593a304173239de1930f7e1fa5daa244cc1af1a0518eea77",
+    "study_request_identity": "mncs:compiler:compilation-study-request:e9651399a16d59ce6ec9226a3a55e63bf7f11aa743e1013ee01b9992faab60a5",
+    "compilation_request_identity": "mncs:compiler:compilation-request:db5f07309a9d5eb0512510e83b59ce0e1e85ffbf55e4d542063c44a12261b577",
+    "run_identity": "mncs:compiler:study-run:14d39f2f20cc1aaa9801d2fedba56458af4fa7b1531b6022df5a09279b9f9197",
+    "node": {
+      "node_identity": "local-experiment-node",
+      "architecture": "x86_64",
+      "operating_system": "linux",
+      "environment": "native-linux",
+      "observations": {}
+    },
+    "compiler_identity": "mncs:compiler:compiler:f862227638ca7fbc716123d8378cddfef4f76a9ef10ab0e99cc791e65207e45d",
+    "pipeline_identity": "mncs:compiler:pass-pipeline:95cfa1b3b0a540659ed1b7735465c35f8ada62806dc2238f32ee65a3d8e0cc4b",
+    "compiler_host_identity": "mncs:compiler:compiler-host:2655f21d8ccc4b6b4dac35c07954dbab0d8e3d968a6dd88a5f0f5e487045231d",
+    "build_host_identity": "mncs:compiler:build-host:466aa1989749fbdde3815c85a1db08d8a97d2e74e101f1b01608d196750ea36c",
+    "target_identity": "mncs:compiler:target-contract:7db47a6485cddf8e3bbaa129f3cc126ee396c799b7ff1fb243a0b1bb4663f902",
+    "backend_identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+    "realization_plan_identity": "mncs:compiler:target-lowering-plan:6ed1332bebbf49a01e857ff67b8a9cfe369263de34154d0b2cb1b202ea907c0a",
+    "selected_ssa_identity": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+    "backend_artifact_identity": "mncs:compiler:backend-artifact:813f56eb333fda0fdc687895095ffa23bc2169dff14040b34dea68f7a2f81c45",
+    "backend_artifact_kind": "wasm_module",
+    "compilation_status": "completed",
+    "stage_fingerprints": {
+      "source": "cf80529bac1d064715dea132e55a764981c3e9bd33b75c36eb78dbbb56f670a6",
+      "lexical_tokens": "7bd0f0f4d4b8b14e57facae33d1e761f0621e1ae4c422cec35cba212ea6ab28e",
+      "concrete_syntax_tree": "70b21207312f44ae1f7308462d440dbc5df04114fd93581083d166bce5749bfd",
+      "abstract_syntax_tree": "f9dc28e1ca6ac3730bec71d0fbef2ff5699973976e81cda7613306705fa040ce",
+      "semantic": "fe0ae6c7b94fe3b42b24352b383f5b66a7c5acec7d7932fe9b7827138b9846c9",
+      "semantic_graph": "d616d273dfd3eb77a76889c2dc66516d3a65dafd93fba5ecc1da51f95d33bc8b",
+      "identity_map": "6f5fc1662b0ec5ffad81e005a2e411c8cc4f449e4444b2d63ebebe990d861b1f",
+      "validation": "89916369ec030358118301178b89172606d35886980b3d0721be1ae59cd81ba7",
+      "hir": "0c10c250848b403c77043b45b4d13888ac234a820b8b49e6b179a25f164c056c",
+      "ssa": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551",
+      "selected_ssa": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551",
+      "target_lowering_plan": "38df9cf579880bef8e7a663145926b8da8ce2bc369152ea8c8d93f54f5a82c61",
+      "backend_artifact": "2d1ccd9c9cc023e44e148b0445df95ca1baab3125a20f4b349551c14239284f5",
+      "evidence_bundle": "0f32f6eabae3be65db407dd69ce8093c5c09410eb01c3dd9a223c7f643dd3327"
+    },
+    "pass_executions": [
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:41be1de0d8674b343d5fa297fedb89301f64bb7ed7e594a76771e58c20fe47bf",
+        "pass_identity": "mncs:compiler:compiler-pass:75bbef53c4144ef433396b4083023176bdabdaab451c5feb1d145c788f3be8c8",
+        "pass_id": "lex-source",
+        "input_artifact": "mncs:compiler:compiler-artifact:aa8a0a8bd6bec65fe298180f29f13d62cf6e690777cfa0c6917736610751e319",
+        "output_artifact": "mncs:compiler:compiler-artifact:ddbdd07a1a3eef3f27a9d0e13aac534e3a524d737dd41e08d71cd66c9600ffb2",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:076ccd93bf434baf4484d473424ef825401be5900f5dfd48396460a7b29699c2",
+        "pass_identity": "mncs:compiler:compiler-pass:fbf23355ec1d8e84bed5b2d1371d3417e5d5ea0d6f35aa916c24b372f2d1f07c",
+        "pass_id": "parse-source-to-cst",
+        "input_artifact": "mncs:compiler:compiler-artifact:ddbdd07a1a3eef3f27a9d0e13aac534e3a524d737dd41e08d71cd66c9600ffb2",
+        "output_artifact": "mncs:compiler:compiler-artifact:2dfee32647c81fc97a02fc271f796bc43a982d53015a1c827748072b4f5bcbe0",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:c32e002d0a1bb536c77dad80a0289ba40a9060f778afe81b95e07fc67df485cb",
+        "pass_identity": "mncs:compiler:compiler-pass:25af70a2cc2eca9879106c46f6bdfa71a82818054b7a5e9f8945282dc6d1e5d1",
+        "pass_id": "derive-ast",
+        "input_artifact": "mncs:compiler:compiler-artifact:2dfee32647c81fc97a02fc271f796bc43a982d53015a1c827748072b4f5bcbe0",
+        "output_artifact": "mncs:compiler:compiler-artifact:595701ac74cdb1e8555f14e3f40f49248f5db99eb1d829edc0f38b4fadccb36e",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:d27cf24836ba2ffe9c053c792109471cc8e8a05ef489eb5912868f165e675f0b",
+        "pass_identity": "mncs:compiler:compiler-pass:3917fcd9e05a0fc7b6eba161eaddf8928e18dafeb76f97bd8a8886856274b52c",
+        "pass_id": "elaborate-ast-to-semantic",
+        "input_artifact": "mncs:compiler:compiler-artifact:595701ac74cdb1e8555f14e3f40f49248f5db99eb1d829edc0f38b4fadccb36e",
+        "output_artifact": "mncs:compiler:compiler-artifact:edee1ebbd2b296325ec2af0087251adfe8a25f250516b00bdc3ac3ca6402cd4b",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:7776e3ec4c71cc2a57a71533bdb51d0d1f290d4fbc6bca7498745eedb74dd54f",
+        "pass_identity": "mncs:compiler:compiler-pass:54bc75c3145d3cf987799fa65190e7af6d49705cb4f9acc5a7e283183cd572fc",
+        "pass_id": "construct-semantic-graph",
+        "input_artifact": "mncs:compiler:compiler-artifact:edee1ebbd2b296325ec2af0087251adfe8a25f250516b00bdc3ac3ca6402cd4b",
+        "output_artifact": "mncs:compiler:compiler-artifact:a2d05b12ad96acaf51a94cd32aff351e9cf5544fb3734b3aa255088f2f11ba50",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:96fbeba45f6e15689800384ae03ea3fd5b78af650c48841e8158845d12ceda40",
+        "pass_identity": "mncs:compiler:compiler-pass:6886c509bc91a279546bc2998d4eb144e46c3087096c47d456459941fed2306e",
+        "pass_id": "resolve-semantic-identities",
+        "input_artifact": "mncs:compiler:compiler-artifact:a2d05b12ad96acaf51a94cd32aff351e9cf5544fb3734b3aa255088f2f11ba50",
+        "output_artifact": "mncs:compiler:compiler-artifact:cf77df7167ab2f5caddba076773d29ddd95c07ce4656161233f1e375891757fd",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:d62b97537d748cfd2f23229d99e96ff3b2a1d71f595a3a5f016e633ec9b4ca53",
+        "pass_identity": "mncs:compiler:compiler-pass:d3725d529aa43227dc3e424ee6fb0f06ac9597c18331dc29f3afc3cf74cceed2",
+        "pass_id": "analyze-types-and-contracts",
+        "input_artifact": "mncs:compiler:compiler-artifact:cf77df7167ab2f5caddba076773d29ddd95c07ce4656161233f1e375891757fd",
+        "output_artifact": "mncs:compiler:compiler-artifact:8e5a110f40494fee9d5aba0e6a1b6d26c86d1efbcdb0cda9e66dce164d7f5c09",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:6cc8cbedd8a1addc0c0f46c14f5186e0d64af7bb9d1426561c8ad64546df1faf",
+        "pass_identity": "mncs:compiler:compiler-pass:e0abd232e265021e689a1ee2c91bffc60bc1fb5b3a8390be81006d6d25cde380",
+        "pass_id": "lower-semantic-to-hir",
+        "input_artifact": "mncs:compiler:compiler-artifact:edee1ebbd2b296325ec2af0087251adfe8a25f250516b00bdc3ac3ca6402cd4b",
+        "output_artifact": "mncs:compiler:compiler-artifact:13eaf721417467816615b18b5ded7f3647ab70c5682d8c89ccef6e61aa203d69",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:10ef5bd5fd6076e7daf33eca5a1aaaf1ce31a6b505097a41b33a47c5ad77d820",
+        "pass_identity": "mncs:compiler:compiler-pass:91add27f135f4335f617e1fe728d62c4aac6f004c10400b14120bc9776119a5c",
+        "pass_id": "lower-hir-to-ssa",
+        "input_artifact": "mncs:compiler:compiler-artifact:13eaf721417467816615b18b5ded7f3647ab70c5682d8c89ccef6e61aa203d69",
+        "output_artifact": "mncs:compiler:compiler-artifact:c4281cfb205143c9d9b665b3036b458449d6747e83c48c0f7d592fa0cff3066e",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:1fa1bf55e47d3f0a1c7c97a9acdf8c0b823349a6489b837a415fab8726a40826",
+        "pass_identity": "mncs:compiler:compiler-pass:c2bade6ad1ffdf553fdd8001da1b2ce204bf35876122208b87bf7861c6f493a3",
+        "pass_id": "select-canonical-ssa",
+        "input_artifact": "mncs:compiler:compiler-artifact:c4281cfb205143c9d9b665b3036b458449d6747e83c48c0f7d592fa0cff3066e",
+        "output_artifact": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:006e299b5153d75f59432134dfa91530acea99cec953d6cd22fd253245334454",
+        "pass_identity": "mncs:compiler:compiler-pass:c008afb9fb90413d912e4683bc0e196f70a37d2971b71771ce6b749759aa4d11",
+        "pass_id": "plan-target-lowering",
+        "input_artifact": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+        "output_artifact": "mncs:compiler:compiler-artifact:570a3ef808d0f4abe761393b6004ff783d1bb4ead6dd33dfc6de2aaedff579fc",
+        "status": "PASS"
+      },
+      {
+        "edge_identity": "mncs:compiler:transformation-edge:d737cd461e436b542a9e40feadd8975aef6767344ec1f57665e2a847bb033a5a",
+        "pass_identity": "mncs:compiler:compiler-pass:2a6c7d900c7bb4c87a547f14ebfa5c669a7a55095c3244f322c2a8eb0c868833",
+        "pass_id": "realize-selected-ssa",
+        "input_artifact": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+        "output_artifact": "mncs:compiler:compiler-artifact:6dd7f841be46e92f9d912da6434672c9f5db634aa61f01e11fb8458574912580",
+        "status": "PASS"
+      }
+    ],
+    "semantic_fingerprint": "fe0ae6c7b94fe3b42b24352b383f5b66a7c5acec7d7932fe9b7827138b9846c9",
+    "hir_fingerprint": "0c10c250848b403c77043b45b4d13888ac234a820b8b49e6b179a25f164c056c",
+    "ssa_fingerprint": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551",
+    "compilation_result_identity": "mncs:compiler:compilation-result:37cb58632b82fc26c99b23d68e0ba92f93e54c74ff918e85a793af49a5b7683a",
+    "execution_result_references": [],
+    "diagnostics": [],
+    "unresolved_obligations": [],
+    "unresolved_assumptions": [
+      "portable WASM MVP is a research execution envelope, not a native ABI",
+      "the embedded interpreter defines research execution, not a host wasm CLI"
+    ],
+    "invariants": {
+      "expected_equal": [
+        "compiler_identity",
+        "pipeline_identity",
+        "semantic_fingerprint",
+        "hir_fingerprint",
+        "ssa_fingerprint"
+      ],
+      "expected_distinct": [
+        "compiler_host_identity",
+        "build_host_identity",
+        "compilation_request_identity",
+        "compilation_result_identity"
+      ]
+    },
+    "interpretation": "observation_only_not_assurance_or_conformance"
+  },
+  "backend": {
+    "identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+    "name": "mncs-portable-wasm-mvp",
+    "version": "0.1"
+  },
+  "backend_capabilities": {
+    "schema_version": "0.1",
+    "identity": "mncs:compiler:backend-capability:2fafb640a5db8fcb59e423ca00e5198def1f885d5d9685a56aa700d1a61141f5",
+    "backend": {
+      "identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+      "name": "mncs-portable-wasm-mvp",
+      "version": "0.1"
+    },
+    "realization_profile": "mncs:selected-ssa-to-portable-wasm-mvp:0.1",
+    "target_families": [
+      "mncs:target:portable-wasm-mvp-0.1"
+    ],
+    "accepted_ir_versions": [
+      "0.4"
+    ],
+    "required_target_facts": [
+      "abi",
+      "data-layout",
+      "integer",
+      "trap"
+    ],
+    "supported_machine_intents": [
+      "checked_integer",
+      "explicit_failure",
+      "immutable_record_values",
+      "payload_bearing_finite_variants",
+      "saturating_integer_bounded_width",
+      "semantic_bounded_iteration",
+      "strict_boolean_operators",
+      "widening_integer_bounded_width",
+      "wrapping_integer"
+    ],
+    "unsupported_operations": [
+      "effects",
+      "memory",
+      "saturating_integer_above_bounded_width",
+      "widening_integer_above_64_bits"
+    ],
+    "artifact_kinds": [
+      "wasm_module"
+    ],
+    "validator_capabilities": [
+      "bounded_execution_agreement"
+    ],
+    "runtime_requirements": [
+      "embedded_mncs_wasm_interpreter"
+    ],
+    "abi_layout_requirements": [
+      "composite_pointer_abi",
+      "scalar_parameter_result_abi"
+    ],
+    "failure_behavior": "checked overflow, declared failure, division by zero, and MIN/-1 trap through WASM unreachable",
+    "deterministic": true
+  },
+  "realization_plan": {
+    "identity": "mncs:compiler:target-lowering-plan:6ed1332bebbf49a01e857ff67b8a9cfe369263de34154d0b2cb1b202ea907c0a",
+    "selected_ssa": {
+      "identity": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+      "representation": "selected_ssa",
+      "schema_version": "0.4",
+      "fingerprint": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551"
+    },
+    "target": {
+      "identity": "mncs:compiler:target-contract:7db47a6485cddf8e3bbaa129f3cc126ee396c799b7ff1fb243a0b1bb4663f902",
+      "candidate": "mncs:target:portable-wasm-mvp-0.1",
+      "facts": {
+        "abi": "one exported wasm function per MNCS function; scalars pass directly, composites pass as pointers to arena cells",
+        "bounded-iteration": "language-owned bounded SSA backedges use the private dispatcher loop; iteration metadata remains selected-SSA-bound",
+        "data-layout": "scalar two's-complement; i8/i16/i32 in wasm i32; i64 in wasm i64; composites are immutable 8-byte-slot cells in linear memory addressed by i32 pointers",
+        "integer": "wrapping=wasm wrapping; checked=explicit overflow test then trap; saturating=explicit clamp; widening=exact extended-width arithmetic",
+        "trap": "failure terminators and checked overflow map to wasm unreachable"
+      },
+      "evidence": [
+        "mncs:target-evidence:portable-wasm-mvp-0.1:declared-research-contract"
+      ],
+      "assumptions": [
+        "portable WASM MVP is a research execution envelope, not a native ABI",
+        "the embedded interpreter defines research execution, not a host wasm CLI"
+      ]
+    },
+    "backend": {
+      "backend": {
+        "identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+        "name": "mncs-portable-wasm-mvp",
+        "version": "0.1"
+      },
+      "options": {
+        "format": "application/wasm; mncs-portable-wasm-mvp-0.1"
+      },
+      "target_features": [
+        "linear-memory-arena",
+        "mvp",
+        "no-wasi"
+      ],
+      "linker_toolchain": null,
+      "assumptions": [
+        "composites (records and payload-bearing finite variants) are immutable cells in linear memory allocated from a bump arena",
+        "checked overflow traps as unreachable; checked division traps on zero and MIN/-1",
+        "saturating uses explicit bounded-width clamp logic; widening uses exact i64 intermediates"
+      ]
+    },
+    "target_layout_assumptions": [
+      "bounded iteration metadata remains in the selected SSA identity",
+      "no aggregate or pointer layout",
+      "scalar two's-complement integers"
+    ],
+    "abi_assumptions": [
+      "no memory, tables, or imported host functions",
+      "wasm function parameters and a single result"
+    ],
+    "integer_lowering": {
+      "checked": "explicit overflow test then unreachable",
+      "saturating": "explicit bounded-width clamp",
+      "unsupported": "saturating, widening, effects, runtime-check",
+      "widening": "exact extended-width arithmetic",
+      "wrapping": "wasm wrapping add/sub/mul/and/or/xor"
+    },
+    "trap_failure_mapping": {
+      "failure_terminator": "unreachable",
+      "overflow": "unreachable"
+    },
+    "linker_requirements": [],
+    "promises_consumed": [
+      "preserve public return and declared failure"
+    ],
+    "assumptions_introduced": [
+      "checked overflow traps as unreachable; checked division traps on zero and MIN/-1",
+      "composites (records and payload-bearing finite variants) are immutable cells in linear memory allocated from a bump arena",
+      "portable WASM MVP is a research execution envelope, not a native ABI",
+      "saturating uses explicit bounded-width clamp logic; widening uses exact i64 intermediates",
+      "the embedded interpreter defines research execution, not a host wasm CLI"
+    ],
+    "status": "PASS"
+  },
+  "artifact": {
+    "schema_version": "0.2",
+    "identity": "mncs:compiler:backend-artifact:813f56eb333fda0fdc687895095ffa23bc2169dff14040b34dea68f7a2f81c45",
+    "backend": {
+      "identity": "mncs:compiler:backend:6bbc6f37c38ffa3353787ff9ea565d07db3755b42efa8a59871374123adbca15",
+      "name": "mncs-portable-wasm-mvp",
+      "version": "0.1"
+    },
+    "input": {
+      "identity": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+      "representation": "selected_ssa",
+      "schema_version": "0.4",
+      "fingerprint": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551"
+    },
+    "target": {
+      "identity": "mncs:compiler:target-contract:7db47a6485cddf8e3bbaa129f3cc126ee396c799b7ff1fb243a0b1bb4663f902",
+      "candidate": "mncs:target:portable-wasm-mvp-0.1",
+      "facts": {
+        "abi": "one exported wasm function per MNCS function; scalars pass directly, composites pass as pointers to arena cells",
+        "bounded-iteration": "language-owned bounded SSA backedges use the private dispatcher loop; iteration metadata remains selected-SSA-bound",
+        "data-layout": "scalar two's-complement; i8/i16/i32 in wasm i32; i64 in wasm i64; composites are immutable 8-byte-slot cells in linear memory addressed by i32 pointers",
+        "integer": "wrapping=wasm wrapping; checked=explicit overflow test then trap; saturating=explicit clamp; widening=exact extended-width arithmetic",
+        "trap": "failure terminators and checked overflow map to wasm unreachable"
+      },
+      "evidence": [
+        "mncs:target-evidence:portable-wasm-mvp-0.1:declared-research-contract"
+      ],
+      "assumptions": [
+        "portable WASM MVP is a research execution envelope, not a native ABI",
+        "the embedded interpreter defines research execution, not a host wasm CLI"
+      ]
+    },
+    "artifact_kind": "wasm_module",
+    "format": "application/wasm; mncs-portable-wasm-mvp-0.1",
+    "bytes_sha256": "2d1ccd9c9cc023e44e148b0445df95ca1baab3125a20f4b349551c14239284f5",
+    "bytes_hex": "0061736d0100000001380a60017f017f60027f7f017f60027f7f017f60027f7f017f60017f017f60017f017f60017f017f60017f017f60037f7f7f017f60017f017f030b0a0001020304050607080905030100100606017f0141080b077e0a0000000c636f6e747269627574696f6e00010000020000030000040e69735f65766964656e746961727900050e7265766965775f7665726469637400061c73616d655f65706f63685f666565646261636b5f656c696769626c6500071173656c656374696f6e5f6f7574636f6d6500080a6d6e63735f616c6c6f6300090ae8130a4105017f017f017f017f017f4100210503402005410046044020002802002101200041086a2802002102200120021002210320030f0b20054101460440000b000b0ba2020a017f017f017f017f017f017f017f017f017f017f4100210b0340200b410046044020004101462102200204404102210b054107210b0b0c010b200b410146044020030f0b200b4102460440200121034101210b0c010b200b4103460440200121034101210b0c010b200b410446044041002104200421034101210b0c010b200b410546044041002105200521034101210b0c010b200b410646044041002106200621034101210b0c010b200b410746044020004102462107200704404103210b054108210b0b0c010b200b410846044020004100462108200804404104210b054109210b0b0c010b200b410946044020004103462109200904404105210b05410a210b0b0c010b200b410a4604404106210b0c010b200b410b460440000b000b0bca020c017f017f017f017f017f017f017f017f017f017f017f017f4100210d0340200d410046044020004100462102200204404102210d054105210d0b0c010b200d410146044020030f0b200d4102460440200121034101210d0c010b200d410346044041012104200421034101210d0c010b200d410446044020014100462105200504404108210d05410b210d0b0c010b200d410546044020004101462106200604404103210d054106210d0b0c010b200d41064604404104210d0c010b200d4107460440200721034101210d0c010b200d410846044041022108200821074107210d0c010b200d410946044041012109200921074107210d0c010b200d410a4604404102210a200a21074107210d0c010b200d410b4604402001410146210b200b04404109210d05410c210d0b0c010b200d410c460440410a210d0c010b200d410d460440000b000b0b820518017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f017f41002119034020194100460440200020011002210220024100462103200304404102211905410521190b0c010b2019410146044020040f0b2019410246044020004100462105200504404108211905410b21190b0c010b201941034604402000410146210620060440410e211905411121190b0c010b2019410446044020004102462107200704404114211905411721190b0c010b2019410546044020024101462108200804404103211905410621190b0c010b20194106460440410421190c010b2019410746044020092104410121190c010b201941084604404101210a200a2109410721190c010b201941094604404100210b200b2109410721190c010b2019410a4604404100210c200c2109410721190c010b2019410b4604402000410146210d200d04404109211905410c21190b0c010b2019410c460440410a21190c010b2019410d460440200e2104410121190c010b2019410e4604404101210f200f210e410d21190c010b2019410f460440410021102010210e410d21190c010b20194110460440410021112011210e410d21190c010b201941114604402000410046211220120440410f211905411221190b0c010b20194112460440411021190c010b2019411346044020132104410121190c010b201941144604404101211420142113411321190c010b201941154604404100211520152113411321190c010b201941164604404100211620162113411321190c010b2019411746044020004100462117201704404115211905411821190b0c010b20194118460440411621190c010b20194119460440000b000b0bbc0108017f017f017f017f017f017f017f017f4100210803402008410046044020004100462101200104404102210805410521080b0c010b2008410146044020020f0b200841024604404101210320032102410121080c010b200841034604404101210420042102410121080c010b200841044604404100210520052102410121080c010b2008410546044020004101462106200604404103210805410621080b0c010b20084106460440410421080c010b20084107460440000b000b0bae020c017f017f017f017f017f017f017f017f017f017f017f017f4100210c0340200c410046044020004101462101200104404102210c054107210c0b0c010b200c410146044020020f0b200c410246044041012103200321024101210c0c010b200c410346044041012104200421024101210c0c010b200c410446044041002105200521024101210c0c010b200c410546044041002106200621024101210c0c010b200c410646044041002107200721024101210c0c010b200c410746044020004102462108200804404103210c054108210c0b0c010b200c410846044020004100462109200904404104210c054109210c0b0c010b200c41094604402000410346210a200a04404105210c05410a210c0b0c010b200c410a4604404106210c0c010b200c410b460440000b000b0b5f04017f017f017f017f41002104034020044100460440200004404101210405410221040b0c010b200441014604404102210120010f0b20044102460440410321040c010b200441034604404101210220020f0b20044104460440000b000b0bae020c017f017f017f017f017f017f017f017f017f017f017f017f4100210c0340200c410046044020004102462101200104404102210c054107210c0b0c010b200c410146044020020f0b200c410246044041002103200321024101210c0c010b200c410346044041012104200421024101210c0c010b200c410446044041012105200521024101210c0c010b200c410546044041012106200621024101210c0c010b200c410646044041012107200721024101210c0c010b200c410746044020004100462108200804404103210c054108210c0b0c010b200c410846044020004101462109200904404104210c054109210c0b0c010b200c41094604402000410346210a200a04404105210c05410a210c0b0c010b200c410a4604404106210c0c010b200c410b460440000b000b0b99020b017f017f017f017f017f017f017f017f017f017f017f4100210d0340200d410046044020004101462103200304404102210d054105210d0b0c010b200d410146044020040f0b200d410246044041012105200521044101210d0c010b200d410346044020014100462106200604404108210d05410a210d0b0c010b200d410446044041002107200721044101210d0c010b200d410546044020004102462108200804404103210d054106210d0b0c010b200d41064604404104210d0c010b200d4107460440200921044101210d0c010b200d41084604404101210a200a21094107210d0c010b200d410946044020021006210b200b21094107210d0c010b200d410a4604404109210d0c010b200d410b460440000b000b0b1701017f230021012300200041076a4178716a240020010b",
+    "exports": [
+      "",
+      "contribution",
+      "is_evidentiary",
+      "review_verdict",
+      "same_epoch_feedback_eligible",
+      "selection_outcome"
+    ],
+    "function_value_contracts": {
+      "combine": {
+        "inputs": [
+          {
+            "record": {
+              "type_identity": "mncs:0.2:record-type:mncs.core.status.v1::StatusPair::left%3AStatus%3Bright%3AStatus%3B",
+              "name": "StatusPair",
+              "fields": [
+                [
+                  "left",
+                  "Status"
+                ],
+                [
+                  "right",
+                  "Status"
+                ]
+              ]
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ]
+      },
+      "contribution": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                "1": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                "2": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                "3": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                "4": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic"
+              }
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ]
+      },
+      "dominate": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ]
+      },
+      "dominates": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ]
+      },
+      "is_decided": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ]
+      },
+      "is_evidentiary": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                "1": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                "2": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                "3": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                "4": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ]
+      },
+      "review_verdict": {
+        "inputs": [
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ]
+      },
+      "same_epoch_feedback_eligible": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+                "1": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+                "2": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+                "3": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+                "4": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ]
+      },
+      "selection_outcome": {
+        "inputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+                "1": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview"
+              }
+            }
+          },
+          {
+            "scalar": {
+              "semantic_type": "bool"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variants": {
+                "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+                "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+                "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "composite_value_contracts": {
+      "Role": {
+        "finite": {
+          "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+          "variants": {
+            "0": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+            "1": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+            "2": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+            "3": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+            "4": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic"
+          },
+          "payloads": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": []
+          }
+        }
+      },
+      "Status": {
+        "finite": {
+          "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+          "variants": {
+            "0": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "1": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "2": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN"
+          },
+          "payloads": {
+            "0": [],
+            "1": [],
+            "2": []
+          }
+        }
+      },
+      "StatusPair": {
+        "record": {
+          "type_identity": "mncs:0.2:record-type:mncs.core.status.v1::StatusPair::left%3AStatus%3Bright%3AStatus%3B",
+          "name": "StatusPair",
+          "fields": [
+            [
+              "left",
+              "Status"
+            ],
+            [
+              "right",
+              "Status"
+            ]
+          ]
+        }
+      },
+      "UnknownPolicy": {
+        "finite": {
+          "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+          "variants": {
+            "0": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+            "1": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview"
+          },
+          "payloads": {
+            "0": [],
+            "1": []
+          }
+        }
+      }
+    },
+    "assumptions": [
+      "checked overflow traps as unreachable; checked division traps on zero and MIN/-1",
+      "composites (records and payload-bearing finite variants) are immutable cells in linear memory allocated from a bump arena",
+      "portable WASM MVP is a research execution envelope, not a native ABI",
+      "saturating uses explicit bounded-width clamp logic; widening uses exact i64 intermediates",
+      "the embedded interpreter defines research execution, not a host wasm CLI"
+    ],
+    "obligations_generated": [],
+    "execution_applicability": [
+      "embedded mncs-portable-wasm-mvp interpreter",
+      "no WASI",
+      "no host CLI"
+    ],
+    "evidence_dependencies": [
+      "mncs:target-evidence:portable-wasm-mvp-0.1:declared-research-contract"
+    ],
+    "unsupported": [],
+    "status": "PASS"
+  },
+  "translation_validations": [
+    {
+      "schema_version": "0.1",
+      "contract_id": "mncs:language:translation-validation-result:0.1",
+      "identity": "mncs:compiler:translation-validation:93040b7b93bac2fdcfcb44f56d1c195b832e660c5864e38b74822c2174b04038",
+      "validator": {
+        "identity": "mncs:validator:backend-lowering-bounded-agreement:0.1",
+        "name": "backend-lowering-bounded-agreement",
+        "version": "0.1",
+        "independence": "independent_implementation"
+      },
+      "input": {
+        "identity": "mncs:compiler:compiler-artifact:540f0e081d07eb63866e04d20461bb6ab0aa687351f78f816610932675ebacf7",
+        "representation": "selected_ssa",
+        "schema_version": "0.4",
+        "fingerprint": "ca8a740d217933d279efc8bc3e8f0158117b4f49e92eee352650fe8cbcbe0551"
+      },
+      "output": {
+        "identity": "mncs:compiler:compiler-artifact:6dd7f841be46e92f9d912da6434672c9f5db634aa61f01e11fb8458574912580",
+        "representation": "backend_artifact",
+        "schema_version": "0.2",
+        "fingerprint": "2d1ccd9c9cc023e44e148b0445df95ca1baab3125a20f4b349551c14239284f5"
+      },
+      "claimed_relation": {
+        "kind": "observational-equivalence",
+        "observation_model": {
+          "identity": "mncs:compiler:observation-model:c92632b55e0eabdabeae878a6cd2db16ec113162f4c5276853d1c8342686c475",
+          "name": "mncs-public-behavior",
+          "version": "0.1",
+          "observable_kinds": [
+            "declared_failure",
+            "return_value"
+          ]
+        }
+      },
+      "transformation_kind": "backend-realization:mncs-portable-wasm-mvp",
+      "judgement": "PASS",
+      "assumptions": [
+        "empirical_bounded_agreement_not_universal_equivalence"
+      ],
+      "evidence_dependencies": [
+        "mncs:target-evidence:portable-wasm-mvp-0.1:declared-research-contract"
+      ],
+      "dependency_fingerprints": {},
+      "counterexample": null,
+      "limitations": [
+        "PASS is empirical bounded agreement over the declared corpus",
+        "this is not a proof of universal semantic equivalence"
+      ],
+      "residual_trust": "shares mncs-model integer evaluation and mncs-codegen research execution with the compiler; does not share transformation algorithms with candidate generators",
+      "freshness": "current"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "contribution-developmentfeedback-fail",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 163,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-developmentfeedback-pass",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 163,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-developmentfeedback-unknown",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 163,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-diagnostic-fail",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 288,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-diagnostic-pass",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 288,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-diagnostic-unknown",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 288,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-finalevaluation-fail",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 102,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-finalevaluation-pass",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 102,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-finalevaluation-unknown",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 102,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-reproduction-fail",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 227,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-reproduction-pass",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 227,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-reproduction-unknown",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 227,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-selectionevidence-fail",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 48,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-selectionevidence-pass",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 48,
+      "failure_reason": null
+    },
+    {
+      "case_id": "contribution-selectionevidence-unknown",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 48,
+      "failure_reason": null
+    },
+    {
+      "case_id": "feedback-eligible-developmentfeedback",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 104,
+      "failure_reason": null
+    },
+    {
+      "case_id": "feedback-eligible-diagnostic",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 288,
+      "failure_reason": null
+    },
+    {
+      "case_id": "feedback-eligible-finalevaluation",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 50,
+      "failure_reason": null
+    },
+    {
+      "case_id": "feedback-eligible-reproduction",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 227,
+      "failure_reason": null
+    },
+    {
+      "case_id": "feedback-eligible-selectionevidence",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 163,
+      "failure_reason": null
+    },
+    {
+      "case_id": "is-evidentiary-developmentfeedback",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 163,
+      "failure_reason": null
+    },
+    {
+      "case_id": "is-evidentiary-diagnostic",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 288,
+      "failure_reason": null
+    },
+    {
+      "case_id": "is-evidentiary-finalevaluation",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 104,
+      "failure_reason": null
+    },
+    {
+      "case_id": "is-evidentiary-reproduction",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 227,
+      "failure_reason": null
+    },
+    {
+      "case_id": "is-evidentiary-selectionevidence",
+      "status": "returned",
+      "returned": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 50,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-fail-reject-false",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 50,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-fail-review-true",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 50,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-pass-reject-false",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 135,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-pass-review-true",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 135,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-unknown-reject-false",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 193,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-unknown-reject-true",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 193,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-unknown-review-false",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 308,
+      "failure_reason": null
+    },
+    {
+      "case_id": "selection-unknown-review-true",
+      "status": "returned",
+      "returned": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ],
+      "expectation_met": true,
+      "steps": 282,
+      "failure_reason": null
+    }
+  ],
+  "status": "PASS",
+  "unresolved_reasons": [],
+  "interpretation": "bounded_language_observation_not_universal_equivalence_or_conformance"
+}

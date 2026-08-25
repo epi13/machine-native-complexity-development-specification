@@ -192,6 +192,17 @@ All such data is untrusted input:
 - Per-producer hardwired binding objects: rejected; brittle against family
   evolution and violates tool neutrality.
 
+## 6.1 Alpha amendment: identity syntax widening
+
+Exercising the surface against real Forge identities
+(`mncs-forge://evaluation/<64-hex>`) showed the inherited 0.1 `id` pattern
+cannot express scheme-style producer-native identities in fields such as
+`evidence_id`. Because stable_record_id already carries such identities, the
+0.2-alpha.1 schema widens only its own `$defs/id` pattern to
+`^[A-Za-z0-9][A-Za-z0-9._:@+/-]{0,127}$`. This is additive within the alpha,
+backwards compatible with every earlier alpha record, and leaves 0.1 schemas
+byte-frozen.
+
 ## 7. Rollout plan
 
 1. Land schema, validator support, conformance vectors, and examples behind

@@ -7,6 +7,9 @@ All notable MNCDS specification and reference-tooling changes should be recorded
 ### Family-integrated development-process protocol (RFC 0005)
 
 - Added RFC 0005 proposing versioned producer-record bindings for development records.
+- Alpha amendment (RFC 0005 §6.1): widened the 0.2-alpha-only `id` pattern to
+  accept scheme-style producer-native identities (for example
+  `mncs-forge://evaluation/<sha>`); discovered by the cross-family spine exercise.
 - Added the experimental `MNCDS 0.2-alpha.1` record surface: the complete
   0.1-rc.1 aggregate plus `producer_bindings[]` with role, compatibility,
   evidence-status, subject/partition identity, and declared-rerun semantics.

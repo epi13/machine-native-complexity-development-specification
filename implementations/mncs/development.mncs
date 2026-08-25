@@ -1,0 +1,111 @@
+mncs 0.6;
+
+// mncs.family.development — machine-native reference core of MNCDS
+// development-decision semantics (RFC 0005 and 0.1-rc.1 section 10).
+//
+// This module is a non-normative reference implementation owned by the
+// Machine-Native Complexity Development Specification repository. The
+// normative meaning of selection, feedback eligibility, and tri-state
+// aggregation lives in the specification text and schemas; this module
+// encodes the same total functions so host tooling can obtain verdicts by
+// executing machine-native code instead of re-deriving them ad hoc.
+//
+// Dominance discipline is inherited from mncs.core.status: no operation in
+// this module can turn UNKNOWN into PASS or delete FAIL. Selection under a
+// reject policy fails closed on UNKNOWN; under human_review policy UNKNOWN
+// survives only with an explicit accept decision.
+//
+// Every operation is total and effect-free. No arithmetic is used, so no
+// overflow obligations arise.
+
+module mncs.family.development.v01;
+
+use mncs.core.status.v1;
+
+// RFC 0005 binding roles. Evidentiary roles are the two that may carry a
+// selected candidate's claim: selection evidence and final-evaluation
+// evidence. All other roles are diagnostic/feedback/reproduction context and
+// never propagate producer status into the record's computed status.
+enum Role {
+    DevelopmentFeedback,
+    SelectionEvidence,
+    FinalEvaluation,
+    Reproduction,
+    Diagnostic,
+}
+
+// A binding is a (role, producer-declared status) pair passed positionally.
+// The tri-state outcome is declared by the producing system; MNCDS preserves
+// it exactly and never reinterprets it here.
+
+// True exactly for the two evidentiary roles of RFC 0005 rule B6/B9/B10.
+fn is_evidentiary(role: Role) -> (result: bool) {
+    return match role {
+        Role.SelectionEvidence => true,
+        Role.FinalEvaluation => true,
+        Role.DevelopmentFeedback => false,
+        Role.Reproduction => false,
+        Role.Diagnostic => false,
+    };
+}
+
+// Status contribution of one binding toward an aggregated claim about the
+// selected candidate:
+//   - evidentiary bindings propagate their producer status (FAIL stays FAIL,
+//     UNKNOWN stays UNKNOWN, PASS is neutral);
+//   - every non-evidentiary role contributes the dominance-neutral PASS, i.e.
+//     it can neither strengthen nor weaken anything.
+fn contribution(role: Role, producer_status: Status) -> (result: Status) {
+    return match role {
+        Role.SelectionEvidence => producer_status,
+        Role.FinalEvaluation => producer_status,
+        Role.DevelopmentFeedback => Status.PASS,
+        Role.Reproduction => Status.PASS,
+        Role.Diagnostic => Status.PASS,
+    };
+}
+
+// RFC 0005 rule B7 as data: final-partition evidence is never eligible as
+// same-epoch repair feedback. Development-partition evidence is.
+fn same_epoch_feedback_eligible(role: Role) -> (result: bool) {
+    return match role {
+        Role.FinalEvaluation => false,
+        Role.DevelopmentFeedback => true,
+        Role.SelectionEvidence => true,
+        Role.Reproduction => true,
+        Role.Diagnostic => true,
+    };
+}
+
+// Declared UNKNOWN policy of a selection (0.1-rc.1 section 10).
+enum UnknownPolicy { Reject, HumanReview }
+
+// Selection outcome given the aggregated required-evidence status.
+//   aggregate FAIL            -> FAIL (dominates everything)
+//   aggregate UNKNOWN + reject         -> FAIL (fail closed)
+//   aggregate UNKNOWN + review + explicit acceptance -> UNKNOWN preserved
+//   aggregate UNKNOWN + review + missing acceptance  -> FAIL (fail closed)
+//   aggregate PASS            -> PASS
+fn selection_outcome(
+    aggregate: Status,
+    policy: UnknownPolicy,
+    review_accepted_with_unknown: bool,
+) -> (result: Status) {
+    return match aggregate {
+        Status.FAIL => Status.FAIL,
+        Status.UNKNOWN => match policy {
+            UnknownPolicy.Reject => Status.FAIL,
+            UnknownPolicy.HumanReview => review_verdict(review_accepted_with_unknown),
+        },
+        Status.PASS => Status.PASS,
+    };
+}
+
+// Explicit accept-with-UNKNOWN preserves UNKNOWN; a missing or rejecting
+// review fails closed.
+fn review_verdict(review_accepted_with_unknown: bool) -> (result: Status) {
+    if review_accepted_with_unknown {
+        return Status.UNKNOWN;
+    }
+    return Status.FAIL;
+}
