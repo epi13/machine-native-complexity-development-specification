@@ -79,6 +79,7 @@ runs every corpus (`corpus*.json`) under `conformance/`, covering 0.1-draft,
 - `rfcs/` — proposals that change MNCDS meaning
 - `docs/` — architecture, rationale, and non-normative guidance
 - `src/mncds_validator/` — reference `mncds` CLI
+- `implementations/mncs/` — non-normative machine-native decision core (`mncs.family.development.v01`) with pinned evidence
 
 ## Family relationships
 

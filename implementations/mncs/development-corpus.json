@@ -1,0 +1,1144 @@
+{
+  "schema_version": "0.1",
+  "name": "mncds-family-development",
+  "cases": [
+    {
+      "id": "contribution-developmentfeedback-pass",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+              "discriminant": 0
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-developmentfeedback-fail",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+              "discriminant": 0
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-developmentfeedback-unknown",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+              "discriminant": 0
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-selectionevidence-pass",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+              "discriminant": 1
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-selectionevidence-fail",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+              "discriminant": 1
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-selectionevidence-unknown",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+              "discriminant": 1
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-finalevaluation-pass",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-finalevaluation-fail",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-finalevaluation-unknown",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-reproduction-pass",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+              "discriminant": 3
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-reproduction-fail",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+              "discriminant": 3
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-reproduction-unknown",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+              "discriminant": 3
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-diagnostic-pass",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+              "discriminant": 4
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-diagnostic-fail",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+              "discriminant": 4
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "contribution-diagnostic-unknown",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "contribution"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+              "discriminant": 4
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback-eligible-developmentfeedback",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "same_epoch_feedback_eligible"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback-eligible-selectionevidence",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "same_epoch_feedback_eligible"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback-eligible-finalevaluation",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "same_epoch_feedback_eligible"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback-eligible-reproduction",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "same_epoch_feedback_eligible"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+              "discriminant": 3
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback-eligible-diagnostic",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "same_epoch_feedback_eligible"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+              "discriminant": 4
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "is-evidentiary-developmentfeedback",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "is_evidentiary"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::DevelopmentFeedback",
+              "discriminant": 0
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "is-evidentiary-selectionevidence",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "is_evidentiary"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::SelectionEvidence",
+              "discriminant": 1
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "is-evidentiary-finalevaluation",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "is_evidentiary"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::FinalEvaluation",
+              "discriminant": 2
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "is-evidentiary-reproduction",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "is_evidentiary"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Reproduction",
+              "discriminant": 3
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "is-evidentiary-diagnostic",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "is_evidentiary"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::Role",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::Role::Diagnostic",
+              "discriminant": 4
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "boolean": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-fail-reject-false",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+              "discriminant": 0
+            }
+          },
+          {
+            "boolean": {
+              "value": false
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-fail-review-true",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+              "discriminant": 1
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+              "discriminant": 1
+            }
+          },
+          {
+            "boolean": {
+              "value": true
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-unknown-reject-false",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+              "discriminant": 0
+            }
+          },
+          {
+            "boolean": {
+              "value": false
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-unknown-reject-true",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+              "discriminant": 0
+            }
+          },
+          {
+            "boolean": {
+              "value": true
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-unknown-review-true",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+              "discriminant": 1
+            }
+          },
+          {
+            "boolean": {
+              "value": true
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+            "discriminant": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-unknown-review-false",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::UNKNOWN",
+              "discriminant": 2
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+              "discriminant": 1
+            }
+          },
+          {
+            "boolean": {
+              "value": false
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::FAIL",
+            "discriminant": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-pass-reject-false",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::Reject",
+              "discriminant": 0
+            }
+          },
+          {
+            "boolean": {
+              "value": false
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "selection-pass-review-true",
+      "request": {
+        "schema_version": "0.1",
+        "target": {
+          "module": "mncs.family.development.v01",
+          "function": "selection_outcome"
+        },
+        "arguments": [
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+              "discriminant": 0
+            }
+          },
+          {
+            "finite": {
+              "type_identity": "mncs:0.2:finite-type:mncs.family.development.v01::UnknownPolicy",
+              "variant_identity": "mncs:0.2:finite-variant:mncs.family.development.v01::UnknownPolicy::HumanReview",
+              "discriminant": 1
+            }
+          },
+          {
+            "boolean": {
+              "value": true
+            }
+          }
+        ],
+        "step_budget": 1024
+      },
+      "expected": [
+        {
+          "finite": {
+            "type_identity": "mncs:0.2:finite-type:mncs.core.status.v1::Status",
+            "variant_identity": "mncs:0.2:finite-variant:mncs.core.status.v1::Status::PASS",
+            "discriminant": 0
+          }
+        }
+      ]
+    }
+  ]
+}
