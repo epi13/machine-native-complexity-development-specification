@@ -20,6 +20,21 @@ PROFILE_ORDER = {
     "MNCDS-D3": 3,
     "MNCDS-D4": 4,
 }
+
+BINDING_ROLES = frozenset(
+    {
+        "development_feedback",
+        "selection_evidence",
+        "final_evaluation_evidence",
+        "reproduction_evidence",
+        "diagnostic_evidence",
+    }
+)
+EVIDENTIARY_BINDING_ROLES = frozenset({"selection_evidence", "final_evaluation_evidence"})
+COMPATIBILITY_STATUSES = frozenset(
+    {"supported", "unsupported_native_schema", "unverified_producer"}
+)
+
 REQUIRED_ROLES = {
     "contract_authority",
     "generator_authority",
@@ -64,8 +79,6 @@ class MncdsValidationReport:
     def category(self) -> str:
         if not self.supported:
             return "UNSUPPORTED"
-        if not self.valid:
-            return "INVALID"
         return self.computed_status
 
     def add(self, code: str, message: str, path: str = "") -> None:
@@ -77,6 +90,7 @@ class MncdsValidationReport:
         self.warnings.append(MncdsIssue(code, message, path))
 
     def fail(self, code: str, message: str, path: str = "") -> None:
+        self.valid = False
         self.computed_status = "FAIL"
         self.issues.append(MncdsIssue(code, message, path))
 
@@ -221,6 +235,19 @@ def _check_partitions(value: dict[str, Any], report: MncdsValidationReport) -> N
             "a contaminated holdout cannot support the claimed profile",
             "$/partitions/holdout_contaminated",
         )
+
+
+def _producer_bindings(value: dict[str, Any]) -> list[dict[str, Any]]:
+    return _objects(value.get("producer_bindings"))
+
+
+def _binding_targets_selected(binding: dict[str, Any], selected: dict[str, Any] | None) -> bool:
+    """True when a binding is evidentiary for the selected candidate (B9-B12)."""
+
+    if selected is None or binding.get("role") not in EVIDENTIARY_BINDING_ROLES:
+        return False
+    subject = binding.get("subject_candidate_id")
+    return subject is None or subject == selected.get("candidate_id")
 
 
 def _selected_candidate(
@@ -479,6 +506,139 @@ def _check_mncs_binding(value: dict[str, Any], report: MncdsValidationReport) ->
                 f"MNCS binding {key} does not match the development record",
                 f"$/mncs_binding/{key}",
             )
+
+
+def _check_producer_bindings(
+    value: dict[str, Any],
+    selected: dict[str, Any] | None,
+    partition_ids: set[str],
+    report: MncdsValidationReport,
+) -> None:
+    """RFC 0005 rules B1-B13 for 0.2-alpha producer bindings."""
+
+    bindings = _producer_bindings(value)
+    binding_ids = _check_unique_ids(bindings, "binding_id", report, "$/producer_bindings")
+    generator = value.get("generator")
+    generator_executable = generator.get("executable_id") if isinstance(generator, dict) else None
+    for index, binding in enumerate(bindings):
+        base = f"$/producer_bindings/{index}"
+        role = binding.get("role")
+        scope = binding.get("declared_scope")
+        scope = scope if isinstance(scope, dict) else {}
+
+        # B3: subject must exist in the candidate ledger.
+        subject = binding.get("subject_candidate_id")
+        candidate_identities = {
+            item.get("candidate_id") for item in _objects(value.get("candidates"))
+        }
+        if isinstance(subject, str) and subject not in candidate_identities:
+            report.fail(
+                "binding-subject-missing",
+                f"binding subject is not in the candidate ledger: {subject}",
+                f"{base}/subject_candidate_id",
+            )
+        # B4: partition must be declared.
+        bound_partition = binding.get("partition_id")
+        if isinstance(bound_partition, str) and bound_partition not in partition_ids:
+            report.fail(
+                "binding-partition-missing",
+                f"binding references an undeclared partition: {bound_partition}",
+                f"{base}/partition_id",
+            )
+        # B5: reruns must reference a sibling binding and declare their changes.
+        rerun_of = binding.get("rerun_of_binding_id")
+        if rerun_of is not None:
+            if (
+                not isinstance(rerun_of, str)
+                or rerun_of not in binding_ids
+                or rerun_of == binding.get("binding_id")
+            ):
+                report.fail(
+                    "binding-rerun-unknown",
+                    "rerun_of_binding_id must reference another binding in this record",
+                    f"{base}/rerun_of_binding_id",
+                )
+            changes = binding.get("declared_changes")
+            if not isinstance(changes, list) or not changes:
+                report.fail(
+                    "binding-rerun-changes-undeclared",
+                    "a declared rerun must record what changed",
+                    f"{base}/declared_changes",
+                )
+        # B6: evidentiary roles require supported compatibility.
+        evidentiary = role in EVIDENTIARY_BINDING_ROLES
+        compatibility = binding.get("compatibility_status")
+        if evidentiary and compatibility != "supported":
+            report.fail(
+                "binding-ineligible-evidence",
+                f"a {role} binding requires compatibility_status 'supported'",
+                f"{base}/compatibility_status",
+            )
+        # B7: final evaluation is never same-epoch repair feedback.
+        if (
+            role == "final_evaluation_evidence"
+            and scope.get("feedback_use") == "same_epoch_repair"
+        ):
+            report.fail(
+                "binding-feedback-leakage",
+                "final-evaluation evidence cannot feed same-epoch repair",
+                f"{base}/declared_scope/feedback_use",
+            )
+        # B8: no generator self-certification through the binding boundary.
+        if (
+            evidentiary
+            and isinstance(generator_executable, str)
+            and scope.get("generator_executable_identity") == generator_executable
+        ):
+            report.fail(
+                "binding-generator-self-certification",
+                "generator-produced evidence cannot serve as selection or final evidence",
+                f"{base}/declared_scope/generator_executable_identity",
+            )
+        # B13: cross-family identity agreement.
+        scope_candidate = scope.get("candidate_identity")
+        if (
+            isinstance(subject, str)
+            and isinstance(scope_candidate, str)
+            and scope_candidate != subject
+        ):
+            report.fail(
+                "binding-subject-mismatch",
+                "declared_scope.candidate_identity disagrees with subject_candidate_id",
+                f"{base}/declared_scope/candidate_identity",
+            )
+        # B9/B10/B11/B12: status propagation for the selected candidate.
+        if _binding_targets_selected(binding, selected):
+            status = binding.get("evidence_status")
+            if status == "FAIL":
+                report.fail(
+                    "selected-binding-fail",
+                    "selected candidate carries required FAIL producer evidence",
+                    f"{base}/evidence_status",
+                )
+            elif status == "UNKNOWN":
+                report.unknown(
+                    "selected-binding-unknown",
+                    "selected candidate carries UNKNOWN producer evidence; "
+                    "UNKNOWN is preserved, never strengthened",
+                    f"{base}/evidence_status",
+                )
+            elif evidentiary:
+                if compatibility in {"unsupported_native_schema", "unverified_producer"}:
+                    report.unknown(
+                        "selected-binding-unverified",
+                        f"evidentiary binding is unverifiable ({compatibility})",
+                        f"{base}/compatibility_status",
+                    )
+                elif compatibility == "supported" and (
+                    binding.get("content_digest") is None
+                    and binding.get("artifact") is None
+                ):
+                    report.unknown(
+                        "selected-binding-unresolvable",
+                        "evidentiary binding exposes neither content digest nor artifact locator",
+                        base,
+                    )
 
 
 def _validate_draft_value(
@@ -1054,6 +1214,49 @@ def _validate_rc_value(
     return report
 
 
+def _validate_0_2_alpha_value(
+    value: dict[str, Any],
+    *,
+    target: str,
+) -> MncdsValidationReport:
+    """Validate one MNCDS 0.2-alpha.1 record (RFC 0005 experimental surface)."""
+
+    report = MncdsValidationReport(target=target)
+    report.profile = value.get("profile") if isinstance(value.get("profile"), str) else None
+    report.record_id = value.get("record_id") if isinstance(value.get("record_id"), str) else None
+    for error in schema_errors(value, "mncds-development-record-0.2-alpha"):
+        report.add("schema", error)
+    if not report.valid:
+        return report
+
+    roles = _check_rc_authority_overlaps(value, report)
+    _check_rc_generator(value, report)
+    partition_ids = _check_rc_partitions(value, report)
+    epoch_ids = _check_rc_epochs(value, report)
+    _check_rc_protected_evidence(value, partition_ids, report)
+    evaluators = _objects(value.get("evaluators"))
+    evaluator_ids = _check_unique_ids(evaluators, "evaluator_id", report, "$/evaluators")
+    candidate_ids, selected = _check_rc_candidates(
+        value, evaluator_ids, epoch_ids, partition_ids, report
+    )
+    _check_rc_selection(value, selected, report)
+    _check_rc_binding(value, report)
+
+    profile = value.get("profile")
+    if _profile_at_least(profile, "MNCDS-D2"):
+        _check_rc_d2(value, report)
+    if _profile_at_least(profile, "MNCDS-D3"):
+        _check_rc_d3(value, roles, selected, report)
+    if _profile_at_least(profile, "MNCDS-D4"):
+        _check_rc_d4(value, candidate_ids, report)
+
+    # RFC 0005 additions. Structural failures above already mark the record
+    # invalid; binding status propagation still runs so computed status reflects
+    # producer-declared evidence even alongside other findings.
+    _check_producer_bindings(value, selected, partition_ids, report)
+    return report
+
+
 def validate_development_value(
     value: dict[str, Any],
     *,
@@ -1066,6 +1269,8 @@ def validate_development_value(
         return _validate_draft_value(value, target=target)
     if version == "0.1-rc.1":
         return _validate_rc_value(value, target=target)
+    if version == "0.2-alpha.1":
+        return _validate_0_2_alpha_value(value, target=target)
     report = MncdsValidationReport(target=target, valid=False, supported=False)
     report.add(
         "unsupported-version",
