@@ -1,0 +1,333 @@
+{
+  "schema_version": "1",
+  "mncds_version": "0.2-alpha.1",
+  "base_record": "examples/mncds-0.2-alpha/language-span-fix.development-record.json",
+  "cases": [
+    {
+      "id": "valid/d1-case-study-pass",
+      "mutations": [],
+      "expected": {
+        "valid": true,
+        "computed_status": "PASS",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "valid/d4-fixture-tri-state-preserved",
+      "base_record": "examples/mncds-0.2-alpha/d4-release-lifecycle.fixture.json",
+      "mutations": [],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": [],
+        "warning_codes": [
+          "protected-evidence-unknown"
+        ]
+      }
+    },
+    {
+      "id": "invalid/duplicate-binding-id",
+      "mutations": [
+        {
+          "path": "/producer_bindings/0/binding_id",
+          "value": "binding.commit.selected"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "duplicate-id"
+        ]
+      }
+    },
+    {
+      "id": "invalid/malformed-content-digest",
+      "mutations": [
+        {
+          "path": "/producer_bindings/3/content_digest",
+          "value": "sha256:NOTAHASH"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "schema"
+        ]
+      }
+    },
+    {
+      "id": "invalid/malformed-artifact-digest",
+      "mutations": [
+        {
+          "path": "/producer_bindings/0/artifact/digest",
+          "value": "sha256:zzzz"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "schema"
+        ]
+      }
+    },
+    {
+      "id": "invalid/binding-subject-not-in-ledger",
+      "mutations": [
+        {
+          "path": "/producer_bindings/2/subject_candidate_id",
+          "value": "candidate.nonexistent"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-subject-missing",
+          "binding-subject-mismatch"
+        ]
+      }
+    },
+    {
+      "id": "invalid/binding-partition-undeclared",
+      "mutations": [
+        {
+          "path": "/producer_bindings/2/partition_id",
+          "value": "partition.final"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-partition-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/rerun-changes-undeclared",
+      "mutations": [
+        {
+          "op": "remove",
+          "path": "/producer_bindings/4/declared_changes"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-rerun-changes-undeclared"
+        ]
+      }
+    },
+    {
+      "id": "invalid/rerun-target-unknown",
+      "mutations": [
+        {
+          "path": "/producer_bindings/4/rerun_of_binding_id",
+          "value": "binding.does-not-exist"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-rerun-unknown"
+        ]
+      }
+    },
+    {
+      "id": "invalid/rerun-target-self",
+      "mutations": [
+        {
+          "path": "/producer_bindings/4/rerun_of_binding_id",
+          "value": "binding.compiler-study.selected"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-rerun-unknown"
+        ]
+      }
+    },
+    {
+      "id": "invalid/evidentiary-binding-unsupported-schema",
+      "mutations": [
+        {
+          "path": "/producer_bindings/3/role",
+          "value": "selection_evidence"
+        },
+        {
+          "path": "/producer_bindings/3/compatibility_status",
+          "value": "unsupported_native_schema"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-ineligible-evidence"
+        ]
+      }
+    },
+    {
+      "id": "invalid/final-evidence-feedback-leakage",
+      "mutations": [
+        {
+          "path": "/producer_bindings/2/role",
+          "value": "final_evaluation_evidence"
+        },
+        {
+          "path": "/producer_bindings/2/declared_scope/feedback_use",
+          "value": "same_epoch_repair"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-feedback-leakage"
+        ]
+      }
+    },
+    {
+      "id": "invalid/generator-self-certification",
+      "mutations": [
+        {
+          "path": "/producer_bindings/2/role",
+          "value": "selection_evidence"
+        },
+        {
+          "path": "/producer_bindings/2/declared_scope/generator_executable_identity",
+          "value": "generator.agent-session-span-repair"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-generator-self-certification"
+        ]
+      }
+    },
+    {
+      "id": "invalid/cross-family-subject-mismatch",
+      "mutations": [
+        {
+          "path": "/producer_bindings/3/declared_scope/candidate_identity",
+          "value": "candidate.mncs-language-cdee978"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "binding-subject-mismatch"
+        ]
+      }
+    },
+    {
+      "id": "invalid/selected-evidence-carries-producer-fail",
+      "mutations": [
+        {
+          "path": "/producer_bindings/2/role",
+          "value": "selection_evidence"
+        },
+        {
+          "path": "/producer_bindings/2/subject_candidate_id",
+          "value": "candidate.mncs-language-cdee978"
+        },
+        {
+          "path": "/producer_bindings/2/declared_scope/candidate_identity",
+          "value": "candidate.mncs-language-cdee978"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "selected-binding-fail"
+        ]
+      }
+    },
+    {
+      "id": "unknown/selected-evidence-producer-unknown-preserved",
+      "mutations": [
+        {
+          "path": "/producer_bindings/4/role",
+          "value": "final_evaluation_evidence"
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "unknown/evidentiary-binding-without-resolvable-identity",
+      "mutations": [
+        {
+          "path": "/producer_bindings/4/role",
+          "value": "selection_evidence"
+        },
+        {
+          "path": "/producer_bindings/4/evidence_status",
+          "value": "PASS"
+        },
+        {
+          "op": "remove",
+          "path": "/producer_bindings/4/content_digest"
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": [],
+        "warning_codes": [
+          "selected-binding-unresolvable"
+        ]
+      }
+    },
+    {
+      "id": "invalid/unsupported-record-version",
+      "mutations": [
+        {
+          "path": "/schema_version",
+          "value": "0.2-alpha.9"
+        },
+        {
+          "path": "/mncds_version",
+          "value": "0.2-alpha.9"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "UNSUPPORTED",
+        "issue_codes": [
+          "unsupported-version"
+        ]
+      }
+    },
+    {
+      "id": "invalid/candidate-generator-mismatch",
+      "mutations": [
+        {
+          "path": "/candidates/0/generator_id",
+          "value": "generator.other"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "candidate-generator-mismatch"
+        ]
+      }
+    }
+  ]
+}
