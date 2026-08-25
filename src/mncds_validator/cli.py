@@ -64,7 +64,7 @@ def run(args: argparse.Namespace) -> int:
             "mncds_version": MNCDS_VERSION,
             "schema_version": MNCDS_SCHEMA_VERSION,
             "status": "release_candidate",
-            "supported_versions": ["0.1-draft", "0.1-rc.1"],
+            "supported_versions": ["0.1-draft", "0.1-rc.1", "0.2-alpha.1"],
             "canonical_repository": (
                 "https://github.com/epi13/machine-native-complexity-development-specification"
             ),
@@ -73,6 +73,7 @@ def run(args: argparse.Namespace) -> int:
             print(json.dumps(result, indent=2, sort_keys=True))
         else:
             print(f"mncds {MNCDS_VERSION} (schema {MNCDS_SCHEMA_VERSION}; release candidate)")
+            print("supported record versions: 0.1-draft, 0.1-rc.1, 0.2-alpha.1 (experimental)")
         return 0
 
     raise AssertionError(f"unhandled command: {args.command}")

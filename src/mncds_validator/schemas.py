@@ -17,6 +17,9 @@ from .errors import SchemaNotFoundError
 SCHEMA_NAMES = {
     "mncds-development-record": "mncds-development-record.schema.json",
     "mncds-development-record-0.1": "mncds-development-record-0.1.schema.json",
+    "mncds-development-record-0.2-alpha": (
+        "mncds-development-record-0.2-alpha.schema.json"
+    ),
 }
 
 

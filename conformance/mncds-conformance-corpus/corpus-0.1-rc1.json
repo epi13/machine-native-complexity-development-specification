@@ -1,0 +1,639 @@
+{
+  "schema_version": "1",
+  "mncds_version": "0.1-rc.1",
+  "base_record": "examples/mncds-0.1-rc/development-record.json",
+  "cases": [
+    {
+      "id": "valid/d4-pass",
+      "mutations": [],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": [],
+        "warning_codes": [
+          "protected-evidence-unknown"
+        ]
+      }
+    },
+    {
+      "id": "valid/d3-pass",
+      "mutations": [
+        {
+          "path": "/profile",
+          "value": "MNCDS-D3"
+        },
+        {
+          "path": "/release_controls",
+          "value": null
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": [],
+        "warning_codes": [
+          "protected-evidence-unknown"
+        ]
+      }
+    },
+    {
+      "id": "invalid/generator-modifies-evaluator",
+      "mutations": [
+        {
+          "path": "/generator/permissions/modify_evaluators",
+          "value": true
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "generator-authority-violation"
+        ]
+      }
+    },
+    {
+      "id": "invalid/generator-accesses-holdout",
+      "mutations": [
+        {
+          "path": "/generator/permissions/access_protected_holdout",
+          "value": true
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "generator-authority-violation"
+        ]
+      }
+    },
+    {
+      "id": "invalid/authority-overlap-undisclosed",
+      "mutations": [
+        {
+          "path": "/roles/2/authority_id",
+          "value": "authority.contract"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "authority-overlap-undisclosed"
+        ]
+      }
+    },
+    {
+      "id": "invalid/candidate-self-parent",
+      "mutations": [
+        {
+          "path": "/candidates/1/parent_ids",
+          "value": [
+            "candidate.epoch-two"
+          ]
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "lineage-cycle"
+        ]
+      }
+    },
+    {
+      "id": "invalid/candidate-lineage-cycle",
+      "mutations": [
+        {
+          "path": "/candidates/0/parent_ids",
+          "value": [
+            "candidate.epoch-two"
+          ]
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "lineage-cycle"
+        ]
+      }
+    },
+    {
+      "id": "invalid/candidate-unknown-parent",
+      "mutations": [
+        {
+          "path": "/candidates/0/parent_ids",
+          "value": [
+            "candidate.nonexistent"
+          ]
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "unknown-parent"
+        ]
+      }
+    },
+    {
+      "id": "invalid/material-candidate-not-retained",
+      "mutations": [
+        {
+          "path": "/candidates/0/retained",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "material-candidate-not-retained"
+        ]
+      }
+    },
+    {
+      "id": "invalid/current-epoch-missing",
+      "mutations": [
+        {
+          "path": "/epoch_id",
+          "value": "epoch.missing"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "current-epoch-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/partition-overlap",
+      "mutations": [
+        {
+          "path": "/partitions/final_evaluation_id",
+          "value": "partition.development"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "independent-evidence-missing",
+          "partition-identity-overlap",
+          "protected-partition-missing",
+          "unknown-partition"
+        ]
+      }
+    },
+    {
+      "id": "invalid/protected-evidence-contaminated",
+      "mutations": [
+        {
+          "path": "/protected_evidence/0/contaminated",
+          "value": true
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "protected-evidence-contaminated"
+        ]
+      }
+    },
+    {
+      "id": "invalid/protected-evidence-generator-access",
+      "mutations": [
+        {
+          "path": "/protected_evidence/0/generator_access",
+          "value": true
+        },
+        {
+          "path": "/partitions/holdout_contaminated",
+          "value": true
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "holdout-contaminated",
+          "protected-evidence-contaminated"
+        ]
+      }
+    },
+    {
+      "id": "invalid/selection-policy-mismatch",
+      "mutations": [
+        {
+          "path": "/selection/policy_id",
+          "value": "selection.policy.other"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "selection-policy-mismatch"
+        ]
+      }
+    },
+    {
+      "id": "invalid/benefit-threshold-not-met",
+      "mutations": [
+        {
+          "path": "/selection/minimum_useful_benefit_met",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "benefit-threshold-not-met"
+        ]
+      }
+    },
+    {
+      "id": "invalid/hard-gates-failed",
+      "mutations": [
+        {
+          "path": "/selection/hard_gates_passed",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "hard-gate-failed"
+        ]
+      }
+    },
+    {
+      "id": "invalid/selected-required-fail",
+      "mutations": [
+        {
+          "path": "/candidates/1/evaluator_results/0/status",
+          "value": "FAIL"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "selected-required-fail"
+        ]
+      }
+    },
+    {
+      "id": "invalid/unknown-promoted-under-reject-policy",
+      "mutations": [
+        {
+          "path": "/candidates/1/evaluator_results/0/status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "unknown-promoted"
+        ]
+      }
+    },
+    {
+      "id": "unknown-preserved-under-human-review",
+      "mutations": [
+        {
+          "path": "/candidates/1/evaluator_results/0/status",
+          "value": "UNKNOWN"
+        },
+        {
+          "path": "/selection/unknown_policy",
+          "value": "human_review"
+        },
+        {
+          "path": "/selection/human_review",
+          "value": {
+            "reviewer_id": "authority.selection",
+            "decision": "accept_with_unknown",
+            "rationale": "Experimental record only; no PASS claim is made."
+          }
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "invalid/environment-not-locked",
+      "mutations": [
+        {
+          "path": "/environment_lock/locked",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "environment-not-locked"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d2-reproducibility-none",
+      "mutations": [
+        {
+          "path": "/reproducibility/class",
+          "value": "NONE"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "d2-reproducibility-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d2-seeds-missing",
+      "mutations": [
+        {
+          "path": "/reproducibility/seeds_preserved",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "seed-record-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d2-evaluator-corpus-missing",
+      "mutations": [
+        {
+          "path": "/evaluators/0/regression_corpus_id",
+          "value": null
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "evaluator-corpus-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d3-final-partition-missing",
+      "mutations": [
+        {
+          "path": "/partitions/final_evaluation_id",
+          "value": null
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "holdout-missing",
+          "independent-evidence-missing",
+          "protected-partition-missing",
+          "unknown-partition"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d3-selection-rule-post-hoc",
+      "mutations": [
+        {
+          "path": "/selection/rule_recorded_before_final_evaluation",
+          "value": false
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "selection-rule-post-hoc"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d3-independence-authority-conflict",
+      "mutations": [
+        {
+          "path": "/evaluators/1/authority_id",
+          "value": "authority.generator"
+        },
+        {
+          "path": "/evaluators/1/executable_id",
+          "value": "generator.repair-exec-v1"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "independence-authority-conflict",
+          "independence-executable-conflict",
+          "independent-role-mismatch"
+        ]
+      }
+    },
+    {
+      "id": "unknown/d3-protected-custody-unavailable",
+      "mutations": [
+        {
+          "path": "/protected_evidence",
+          "value": []
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "invalid/mncs-binding-mismatch",
+      "mutations": [
+        {
+          "path": "/mncs_binding/candidate_id",
+          "value": "candidate.epoch-one"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "mncs-binding-mismatch"
+        ]
+      }
+    },
+    {
+      "id": "invalid/mncs-binding-missing-for-planned-level",
+      "mutations": [
+        {
+          "path": "/mncs_binding",
+          "value": null
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "mncs-binding-missing"
+        ]
+      }
+    },
+    {
+      "id": "unknown/d4-rollback-unverified",
+      "mutations": [
+        {
+          "path": "/release_controls/rollback/test_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "invalid/d4-monitoring-failed",
+      "mutations": [
+        {
+          "path": "/release_controls/monitoring/status",
+          "value": "FAIL"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "monitoring-not-established"
+        ]
+      }
+    },
+    {
+      "id": "unknown/d4-monitoring-unavailable",
+      "mutations": [
+        {
+          "path": "/release_controls/monitoring/status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected": {
+        "valid": true,
+        "computed_status": "UNKNOWN",
+        "issue_codes": []
+      }
+    },
+    {
+      "id": "invalid/d4-regeneration-drill-failed",
+      "mutations": [
+        {
+          "path": "/release_controls/regeneration_or_replacement/status",
+          "value": "FAIL"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "regeneration-drill-failed"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d4-replacement-candidate-missing",
+      "mutations": [
+        {
+          "path": "/release_controls/regeneration_or_replacement/replacement_candidate_id",
+          "value": "candidate.nonexistent"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "replacement-candidate-missing"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d4-selected-candidate-retired",
+      "mutations": [
+        {
+          "path": "/release_controls/retirement/retired",
+          "value": true
+        },
+        {
+          "path": "/release_controls/retirement/retired_at",
+          "value": "2026-08-01T00:00:00Z"
+        },
+        {
+          "path": "/release_controls/retirement/reason",
+          "value": "contract superseded"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "selected-candidate-retired"
+        ]
+      }
+    },
+    {
+      "id": "unsupported/version-bump",
+      "mutations": [
+        {
+          "path": "/schema_version",
+          "value": "9.9.9"
+        },
+        {
+          "path": "/mncds_version",
+          "value": "9.9.9"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "UNSUPPORTED",
+        "issue_codes": [
+          "unsupported-version"
+        ]
+      }
+    },
+    {
+      "id": "invalid/d4-rollback-failed",
+      "mutations": [
+        {
+          "path": "/release_controls/rollback/test_status",
+          "value": "FAIL"
+        }
+      ],
+      "expected": {
+        "valid": false,
+        "computed_status": "FAIL",
+        "issue_codes": [
+          "rollback-not-tested"
+        ]
+      }
+    }
+  ]
+}
