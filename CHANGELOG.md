@@ -2,7 +2,10 @@
 
 All notable MNCDS specification and reference-tooling changes should be recorded here.
 
-## Unreleased
+## 0.2.0a1 (validator package; specification surface 0.2-alpha.1)
+
+Prerelease. Experimental alpha implementing RFC 0005; not a release candidate
+of the specification. Bootstrap governance notes apply (`GOVERNANCE.md`).
 
 ### Family-integrated development-process protocol (RFC 0005)
 
