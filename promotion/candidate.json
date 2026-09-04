@@ -1,0 +1,10 @@
+{
+  "schema_version": "mncds-promotion-candidate/0.1",
+  "repository": "epi13/machine-native-complexity-development-specification",
+  "commit": "faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+  "record": "promotion/mncds-promotion-integration.development-record.json",
+  "obligations": [
+    "promotion/obligations/adopt-repository-owned-promotion.obligation.json"
+  ],
+  "notes": "MNCDS promotion speaks about the recorded candidate revision, not HEAD. Exact subject binding is enforced end to end: both required checks are stamped for this commit and the evaluator rejects any other subject. Advancing the candidate is a reviewed change that rebinds the obligation set."
+}

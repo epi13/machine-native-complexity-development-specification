@@ -49,6 +49,7 @@ class ObligationEvaluation:
     subject_commit: str
     resolved: list[str] = field(default_factory=list)
     unresolved: list[str] = field(default_factory=list)
+    required_unresolved: list[str] = field(default_factory=list)
     rejected: list[str] = field(default_factory=list)
     rejected_optional: list[str] = field(default_factory=list)
 
@@ -62,6 +63,7 @@ class ObligationEvaluation:
             },
             "resolved": sorted(self.resolved),
             "unresolved": sorted(self.unresolved),
+            "required_unresolved": sorted(self.required_unresolved),
             "rejected": sorted(self.rejected),
             "rejected_optional": sorted(self.rejected_optional),
         }
@@ -109,7 +111,7 @@ def evaluate_obligations(
 
     seen_keys: set[str] = set()
     resolved: list[str] = []
-    unresolved: list[str] = []
+    required_unresolved: list[str] = []
     optional_open: list[str] = []
     rejected: list[str] = []
     rejected_optional: list[str] = []
@@ -147,14 +149,14 @@ def evaluate_obligations(
             (rejected if required else rejected_optional).append(key)
         else:  # open
             if required:
-                unresolved.append(key)
+                required_unresolved.append(key)
             else:
                 # Optional open obligations stay visible but never decide.
                 optional_open.append(key)
 
     if rejected:
         verdict = "FAIL"
-    elif unresolved:
+    elif required_unresolved:
         verdict = "UNKNOWN"
     else:
         verdict = "PASS"
@@ -164,7 +166,8 @@ def evaluate_obligations(
         subject_repository=subject_repository,
         subject_commit=subject_commit,
         resolved=resolved,
-        unresolved=[*unresolved, *optional_open],
+        unresolved=[*required_unresolved, *optional_open],
+        required_unresolved=required_unresolved,
         rejected=rejected,
         rejected_optional=rejected_optional,
     )

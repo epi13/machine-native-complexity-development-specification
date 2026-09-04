@@ -1,0 +1,366 @@
+{
+  "schema_version": "0.2-alpha.1",
+  "mncds_version": "0.2-alpha.1",
+  "record_id": "development.mncds-promotion-integration-2026-09",
+  "profile": "MNCDS-D1",
+  "epoch_id": "epoch.promotion-integration-1",
+  "created_at": "2026-09-04T00:00:00Z",
+  "supersedes_record_id": null,
+  "charter": {
+    "charter_id": "charter.mncds-promotion-integration",
+    "problem_statement": "MNCDS owns obligation lifecycle semantics but ships no owner-native obligation-set evaluator, so repository-owned promotion cannot be decided from MNCDS evidence alone: open required obligations have no mechanism to hold a promotion boundary at UNKNOWN and authoritative rejections have no mechanism to hold it at FAIL.",
+    "intended_use": "Give MNCDS an owner-native obligation evaluator implementing docs/mncds-check-catalog.md verbatim, and adopt the mncs-actions reusable promotion machinery from a repository-owned MNCDS boundary without moving semantic authority into transport.",
+    "exclusions": [
+      "No MNCS implementation-assurance claim is made.",
+      "Organizational independence of review is not claimed; roster is OPEN.",
+      "Transport-layer verdict semantics are out of scope for this episode."
+    ],
+    "contract_id": "contract.mncds-obligation-evaluation",
+    "baseline_id": "baseline.mncds-no-obligation-evaluator",
+    "environment_id": "environment.mncds-dev",
+    "threat_model_id": "threat.promotion-without-obligation-evidence",
+    "objective": {
+      "objective_id": "objective.owner-native-obligation-verdicts",
+      "metric": "obligation evaluation test failures",
+      "unit": "failing assertions",
+      "direction": "minimize",
+      "minimum_useful_benefit": 1,
+      "operational_rationale": "A promotion boundary that cannot see open or rejected obligations will promote revisions it should hold; the evaluator must map the catalog outcomes exactly."
+    },
+    "selection_policy_id": "selection.policy.regression-green",
+    "planned_mncs_level": null,
+    "hard_rejection_gates": [
+      "gate.catalog-verbatim-mapping",
+      "gate.no-claim-never-unknown"
+    ],
+    "release_owner_id": "authority.epi13-maintenance",
+    "rollback_owner_id": "authority.epi13-maintenance",
+    "retirement_owner_id": "authority.epi13-maintenance"
+  },
+  "baseline": {
+    "baseline_id": "baseline.mncds-no-obligation-evaluator",
+    "artifact_id": "mncds.src.faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+    "source_id": "github.epi13.machine-native-complexity-development-specification.faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+    "build_id": "build.python-validator-faf59ac",
+    "dependency_ids": [
+      "dependency.python-3.13",
+      "dependency.pytest"
+    ],
+    "environment_id": "environment.mncds-dev",
+    "evaluator_ids": [
+      "evaluator.pytest-obligation-evaluation"
+    ],
+    "results": [
+      {
+        "evaluator_id": "evaluator.pytest-obligation-evaluation",
+        "gate_id": "gate.catalog-verbatim-mapping",
+        "partition_id": "partition.development",
+        "required": true,
+        "status": "FAIL",
+        "evidence_id": "sha256:0647e0fc372b7598e56fd2e4758f6273d26b82ed3f41834ad77fb2c1c58918aa"
+      }
+    ],
+    "captured_at": "2026-09-04T00:00:00Z",
+    "immutable": true
+  },
+  "environment_lock": {
+    "environment_id": "environment.mncds-dev",
+    "toolchain_id": "toolchain.python-3.13-pytest",
+    "dependency_ids": [
+      "dependency.python-3.13",
+      "dependency.pytest"
+    ],
+    "hardware_id": "hardware.epi13-workstation",
+    "configuration_id": "configuration.validator-worktree-pinned-commits",
+    "permitted_variance": [
+      "Wall-clock durations vary; test outcomes are deterministic for pinned commits."
+    ],
+    "locked": true
+  },
+  "roles": [
+    {
+      "role": "contract_authority",
+      "authority_id": "authority.epi13-maintenance",
+      "executable_id": null
+    },
+    {
+      "role": "generator_authority",
+      "authority_id": "authority.agent-development-session",
+      "executable_id": "generator.agent-session-obligation-evaluator"
+    },
+    {
+      "role": "evaluator_authority",
+      "authority_id": "authority.pytest-harness",
+      "executable_id": "evaluator.pytest-executable"
+    },
+    {
+      "role": "selection_authority",
+      "authority_id": "authority.epi13-maintenance",
+      "executable_id": null
+    },
+    {
+      "role": "release_authority",
+      "authority_id": "authority.epi13-maintenance",
+      "executable_id": null
+    },
+    {
+      "role": "independent_reviewer",
+      "authority_id": "authority.community-review-open-roster",
+      "executable_id": null
+    }
+  ],
+  "authority_overlaps": [
+    {
+      "authority_id": "authority.epi13-maintenance",
+      "roles": [
+        "contract_authority",
+        "selection_authority",
+        "release_authority"
+      ],
+      "scope": "Bootstrap-phase repository maintenance of epi13/machine-native-complexity-development-specification.",
+      "rationale": "The project operates under bootstrap governance with a single maintainer of record; separating contract, selection, and release authorities is not yet organizationally possible.",
+      "risk": "Contract, acceptance, and release decisions are not independently checked.",
+      "recusal_or_control": "Disclosed bootstrap overlap. Independent-review authority remains unassigned (OPEN roster), so organizational independence stays UNKNOWN and no assurance claim derives from selection or release."
+    }
+  ],
+  "generator": {
+    "generator_id": "generator.agent-session-obligation-evaluator",
+    "configuration_id": "generator.configuration.agent-tranche-2026-09",
+    "authority_id": "authority.agent-development-session",
+    "executable_id": "generator.agent-session-obligation-evaluator",
+    "permissions": {
+      "modify_contract": false,
+      "modify_baseline": false,
+      "modify_evaluators": false,
+      "modify_selection_policy": false,
+      "modify_thresholds": false,
+      "access_protected_holdout": false,
+      "network_access": false,
+      "filesystem_scope": [
+        "machine-native-complexity-development-specification working tree"
+      ],
+      "process_scope": [
+        "python -m pytest",
+        "ruff check",
+        "mncds validate",
+        "mncds evaluate-obligations"
+      ],
+      "tool_ids": [
+        "mncds",
+        "pytest",
+        "ruff"
+      ],
+      "mutation_scope": [
+        "src/mncds_validator/obligations.py",
+        "src/mncds_validator/cli.py",
+        "tests/test_obligation_evaluation.py",
+        "promotion/"
+      ]
+    },
+    "resource_limits": {
+      "max_candidates": 2,
+      "max_wall_seconds": 3600,
+      "max_memory_bytes": 4294967296,
+      "max_processes": 16
+    }
+  },
+  "partitions": {
+    "development_id": "partition.development",
+    "selection_id": "partition.selection",
+    "final_evaluation_id": null,
+    "holdout_contaminated": false,
+    "access_policy_ids": [
+      "policy.repository-visible-evidence"
+    ]
+  },
+  "protected_evidence": [],
+  "evaluators": [
+    {
+      "evaluator_id": "evaluator.pytest-obligation-evaluation",
+      "purpose": "development",
+      "authority_id": "authority.pytest-harness",
+      "executable_id": "evaluator.pytest-executable",
+      "configuration_id": "configuration.pytest-obligation-evaluation",
+      "environment_id": "environment.mncds-dev",
+      "independent": false,
+      "operator_independence": "UNKNOWN",
+      "organizational_independence": "UNKNOWN",
+      "regression_corpus_id": "corpus.obligation-evaluation.3157150da572b6916b945a41c9c28badcd21ec65"
+    },
+    {
+      "evaluator_id": "evaluator.design-ownership-review",
+      "purpose": "development",
+      "authority_id": "authority.epi13-maintenance",
+      "executable_id": "evaluator.design-review-executable",
+      "configuration_id": "configuration.design-review-ownership",
+      "environment_id": "environment.mncds-dev",
+      "independent": false,
+      "operator_independence": "UNKNOWN",
+      "organizational_independence": "UNKNOWN",
+      "regression_corpus_id": "corpus.ownership-boundary-review"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "candidate.transport-side-projection",
+      "parent_ids": [],
+      "epoch_id": "epoch.promotion-integration-1",
+      "generator_id": "generator.agent-session-obligation-evaluator",
+      "generation_sequence": 0,
+      "materially_evaluated": false,
+      "retained": true,
+      "build_status": "PASS",
+      "disposition": "rejected",
+      "objective_value": 0,
+      "evaluator_results": [
+        {
+          "evaluator_id": "evaluator.design-ownership-review",
+          "gate_id": "gate.owner-semantics-stay-in-owner",
+          "partition_id": "partition.development",
+          "required": true,
+          "status": "FAIL",
+          "evidence_id": "sha256:63eeee5f51f9fb046063166260b6dd2f1c782633ee6bd6adef2332e4f73d1765"
+        }
+      ]
+    },
+    {
+      "candidate_id": "candidate.owner-native-evaluator",
+      "parent_ids": [
+        "candidate.transport-side-projection"
+      ],
+      "epoch_id": "epoch.promotion-integration-1",
+      "generator_id": "generator.agent-session-obligation-evaluator",
+      "generation_sequence": 1,
+      "materially_evaluated": true,
+      "retained": true,
+      "build_status": "PASS",
+      "disposition": "selected",
+      "objective_value": 0,
+      "evaluator_results": [
+        {
+          "evaluator_id": "evaluator.pytest-obligation-evaluation",
+          "gate_id": "gate.catalog-verbatim-mapping",
+          "partition_id": "partition.development",
+          "required": true,
+          "status": "PASS",
+          "evidence_id": "sha256:4a3709079892afc12d38671adbbbbecf845b67ff0cb461d9de62f9c827772089"
+        },
+        {
+          "evaluator_id": "evaluator.pytest-obligation-evaluation",
+          "gate_id": "gate.no-claim-never-unknown",
+          "partition_id": "partition.selection",
+          "required": true,
+          "status": "PASS",
+          "evidence_id": "sha256:4a3709079892afc12d38671adbbbbecf845b67ff0cb461d9de62f9c827772089"
+        }
+      ]
+    }
+  ],
+  "candidate_aggregates": [],
+  "selection": {
+    "policy_id": "selection.policy.regression-green",
+    "selection_epoch_id": "epoch.promotion-integration-1",
+    "selected_candidate_id": "candidate.owner-native-evaluator",
+    "rule_recorded_before_final_evaluation": true,
+    "unknown_policy": "reject",
+    "minimum_useful_benefit_met": true,
+    "hard_gates_passed": true,
+    "rationale": "The transport-side projection was rejected at design review without construction: obligation resolution authority belongs to MNCDS, and implementing the mapping in mncs-actions would move semantic authority into transport. The owner-native evaluator implements docs/mncds-check-catalog.md verbatim with 18/18 evaluation tests passing and ruff clean; it was committed as 3157150da572b6916b945a41c9c28badcd21ec65. The unbuilt candidate is rejected and retained as lineage.",
+    "human_review": null
+  },
+  "reproducibility": {
+    "class": "EXACT",
+    "seeds_preserved": true,
+    "protocol": "Check out 3157150da572b6916b945a41c9c28badcd21ec65 in a clean worktree, run python -m pip install -e . then python -m pytest tests/test_obligation_evaluation.py -q; outcomes are deterministic for pinned commits.",
+    "measurement_repetitions": 2,
+    "comparison_statistic": "Exact per-test outcome equality.",
+    "acceptance_bounds": "All outcomes must reproduce exactly; any divergence is FAIL.",
+    "failure_treatment": "A failed regeneration attempt is FAIL; an unrunnable one is UNKNOWN."
+  },
+  "epochs": [
+    {
+      "epoch_id": "epoch.promotion-integration-1",
+      "parent_epoch_id": null,
+      "toolchain_id": "toolchain.python-3.13-pytest",
+      "corpus_id": "corpus.obligation-evaluation-regression",
+      "objective_id": "objective.owner-native-obligation-verdicts",
+      "contract_id": "contract.mncds-obligation-evaluation",
+      "threshold_policy_id": "threshold.zero-evaluation-failures",
+      "development_partition_id": "partition.development",
+      "final_partition_id": null,
+      "change_evidence_ids": [
+        "sha256:d4a236f3da330ba61c994e173828a19b42e4206bf7d15a1eb0312bfae96f3e5c",
+        "sha256:4a3709079892afc12d38671adbbbbecf845b67ff0cb461d9de62f9c827772089"
+      ],
+      "regression_fixture_ids": [
+        "fixture.open-required-obligation-stays-unknown",
+        "fixture.rejected-required-obligation-stays-fail"
+      ]
+    }
+  ],
+  "mncs_binding": null,
+  "release_controls": null,
+  "producer_bindings": [
+    {
+      "binding_id": "binding.commit.baseline",
+      "role": "diagnostic_evidence",
+      "producer": "github.com/epi13/machine-native-complexity-development-specification",
+      "record_kind": "Commit",
+      "native_schema_version": "git",
+      "stable_record_id": "faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+      "compatibility_status": "supported",
+      "evidence_status": "UNKNOWN",
+      "subject_candidate_id": "candidate.transport-side-projection",
+      "artifact": {
+        "identity": "machine-native-complexity-development-specification@faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+        "kind": "source-revision",
+        "location": "https://github.com/epi13/machine-native-complexity-development-specification/commit/faf59ac3ed5beabc1c7ea66bd51e4f71df796c59"
+      },
+      "declared_scope": {
+        "repository_revision": "faf59ac3ed5beabc1c7ea66bd51e4f71df796c59",
+        "summary": "main before the obligation-evaluator tranche; evaluated baseline subject"
+      },
+      "notes": "Source-revision pin only; it carries no outcome claim, so its evidence status is UNKNOWN by construction."
+    },
+    {
+      "binding_id": "binding.commit.selected",
+      "role": "diagnostic_evidence",
+      "producer": "github.com/epi13/machine-native-complexity-development-specification",
+      "record_kind": "Commit",
+      "native_schema_version": "git",
+      "stable_record_id": "3157150da572b6916b945a41c9c28badcd21ec65",
+      "compatibility_status": "supported",
+      "evidence_status": "UNKNOWN",
+      "subject_candidate_id": "candidate.owner-native-evaluator",
+      "artifact": {
+        "identity": "machine-native-complexity-development-specification@3157150da572b6916b945a41c9c28badcd21ec65",
+        "kind": "source-revision",
+        "location": "https://github.com/epi13/machine-native-complexity-development-specification/commit/3157150da572b6916b945a41c9c28badcd21ec65"
+      },
+      "declared_scope": {
+        "repository_revision": "3157150da572b6916b945a41c9c28badcd21ec65",
+        "summary": "owner-native obligation evaluator committed; selected candidate source"
+      },
+      "notes": "Source-revision pin only; it carries no outcome claim, so its evidence status is UNKNOWN by construction."
+    }
+  ],
+  "extensions": {
+    "io.github.epi13:mncds": {
+      "episode_class": "constructed integration tranche with executed verification",
+      "original_episode": {
+        "commitment": "3157150da572b6916b945a41c9c28badcd21ec65",
+        "evaluation_runs": "pytest tests/test_obligation_evaluation.py (18 passed), ruff check src tests (clean)"
+      },
+      "verification": {
+        "executed": "2026-09-04",
+        "method": "owner-native mncds CLI and pytest against the committed evaluator",
+        "open_required_outcome": "UNKNOWN with key (exit 3)",
+        "resolved_outcome": "PASS (exit 0)"
+      },
+      "downstream_consumers": [
+        "mncds-promotion boundary mncds-development-record evidence",
+        "MNCS-Commons ChangeSet promotion relation"
+      ]
+    }
+  }
+}
