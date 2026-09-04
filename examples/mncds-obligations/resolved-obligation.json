@@ -1,0 +1,28 @@
+{
+  "schema_version": "mncds-obligation-record/0.1",
+  "obligation_key": "pressure.mncs-language.span-fix.unknown-backend",
+  "status": "resolved",
+  "required": true,
+  "subject": {
+    "repository": "epi13/mncs-language",
+    "commit": "cdee9783bd9a8e05e487fb0146515aa670000000"
+  },
+  "origin": {
+    "kind": "development-pressure",
+    "authority": "mncs-actions",
+    "pressure_id": "pressure-0001"
+  },
+  "resolution": {
+    "resolution": "fixed",
+    "evidence_refs": [
+      "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    ],
+    "resolved_by": "epi13/mncs-language",
+    "resolved_at": "2026-08-20T00:00:00Z"
+  },
+  "evidence": [
+    "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ],
+  "supersedes": null,
+  "extensions": {}
+}
