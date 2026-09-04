@@ -20,6 +20,7 @@ SCHEMA_NAMES = {
     "mncds-development-record-0.2-alpha": (
         "mncds-development-record-0.2-alpha.schema.json"
     ),
+    "mncds-obligation-record-0.1": "mncds-obligation-record-0.1.schema.json",
 }
 
 
