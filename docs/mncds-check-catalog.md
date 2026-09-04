@@ -40,20 +40,30 @@ these identities and apply the result mapping below verbatim.
 ### `mncds-obligations`
 
 - Provider: `mncds`.
-- Contract revision: `mncds-obligation-record/0.1`
-  (see `schemas/mncds-obligation-record-0.1.schema.json`).
+- Contract revision: `mncds-obligation-record/0.2`
+  (see `schemas/mncds-obligation-record-0.2.schema.json`;
+  `0.1` remains loadable but is superseded).
 - Input: a set of MNCDS obligation records projected from development
   pressure and ChangeSet evidence (see `docs/obligation-projection.md`).
+- Resolution authority rules (a resolution is authoritative only when):
+  - `status` is `resolved` with `resolution.fixed`, or `rejected` with
+    `resolution.rejected` (kinds cohere; `tolerated` is boundary policy,
+    never a self-granted resolution);
+  - `resolution.evidence_refs` is non-empty;
+  - `resolution.resolved_by` names the resolver and `resolved_at` the time;
+  - no `resolution` block accompanies `open`;
+  - keys are unique within the evaluation set and scoped to one subject.
 - Result mapping:
   - every obligation `resolved`, or no obligations are `required` ->
     `PASS` (development evidence is complete enough for evaluation);
   - at least one `required` obligation remains `open` -> `UNKNOWN`
     (valid but incomplete; the boundary cannot decide);
   - a `required` obligation carries a negative resolution
-    (`resolution == "rejected"` with authoritative evidence) -> `FAIL`;
-  - malformed, contradictory (duplicate `obligation_key`), or
-    revision-unbound obligation input -> no claim is established
-    (`INVALID` / `NOT_ESTABLISHED`; never `UNKNOWN`).
+    (`rejected` with authoritative evidence) -> `FAIL`;
+  - malformed, contradictory (duplicate `obligation_key`), incoherent
+    resolution, anonymous resolution, or revision-unbound obligation
+    input -> no claim is established (`INVALID` / `NOT_ESTABLISHED`;
+    never `UNKNOWN`).
 - Optional (`required == false`) obligations that remain `open` stay
   visible in `unresolved` but never decide the check on their own.
 

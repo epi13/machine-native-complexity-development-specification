@@ -12,7 +12,7 @@ from typing import Any
 from mncds_validator.schemas import SCHEMA_NAMES, load_schema, schema_errors
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA_NAME = "mncds-obligation-record-0.1"
+SCHEMA_NAME = "mncds-obligation-record-0.2"
 OPEN_EXAMPLE = ROOT / "examples/mncds-obligations/open-required-obligation.json"
 RESOLVED_EXAMPLE = ROOT / "examples/mncds-obligations/resolved-obligation.json"
 
@@ -28,7 +28,7 @@ def _resolved() -> dict[str, Any]:
 def test_obligation_schema_is_packaged_and_discoverable() -> None:
     assert SCHEMA_NAME in SCHEMA_NAMES
     schema = load_schema(SCHEMA_NAME)
-    assert schema["properties"]["schema_version"]["const"] == "mncds-obligation-record/0.1"
+    assert schema["properties"]["schema_version"]["const"] == "mncds-obligation-record/0.2"
     assert schema_errors(_open(), SCHEMA_NAME) == []
     assert schema_errors(_resolved(), SCHEMA_NAME) == []
 
@@ -82,3 +82,32 @@ def test_rejected_resolution_is_expressible() -> None:
     record["status"] = "rejected"
     record["resolution"]["resolution"] = "rejected"
     assert schema_errors(record, SCHEMA_NAME) == []
+
+
+def test_resolution_kind_must_cohere_with_status() -> None:
+    resolved_as_rejected = _resolved()
+    resolved_as_rejected["resolution"]["resolution"] = "rejected"
+    assert schema_errors(resolved_as_rejected, SCHEMA_NAME) != []
+
+    rejected_as_fixed = _resolved()
+    rejected_as_fixed["status"] = "rejected"
+    assert schema_errors(rejected_as_fixed, SCHEMA_NAME) != []
+
+    self_granted_tolerance = _resolved()
+    self_granted_tolerance["resolution"]["resolution"] = "tolerated"
+    assert schema_errors(self_granted_tolerance, SCHEMA_NAME) != []
+
+
+def test_resolution_requires_resolver_identity() -> None:
+    anonymous = _resolved()
+    del anonymous["resolution"]["resolved_by"]
+    assert schema_errors(anonymous, SCHEMA_NAME) != []
+
+    undated = _resolved()
+    del undated["resolution"]["resolved_at"]
+    assert schema_errors(undated, SCHEMA_NAME) != []
+
+
+def test_legacy_01_schema_remains_loadable() -> None:
+    legacy = load_schema("mncds-obligation-record-0.1")
+    assert legacy["properties"]["schema_version"]["const"] == "mncds-obligation-record/0.1"
