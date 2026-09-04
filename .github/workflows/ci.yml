@@ -83,3 +83,35 @@ jobs:
               assert schema["$id"], name
               print(f"schema ok: {name} -> {schema['$id']}")
           PY
+
+  mncs-actions-transport:
+    # MNCDS as a first-class family producer: the owner-native validator
+    # output feeds mncs-actions transport at a pinned revision, applying
+    # docs/mncds-check-catalog.md without redefining its semantics.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Check out pinned mncs-actions transport
+        uses: actions/checkout@v5
+        with:
+          repository: epi13/mncs-actions
+          ref: 22591eb13a8f4f5bf00f2753e1f820a85ef91208
+          path: mncs-actions
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install package
+        run: python -m pip install -e .
+
+      - name: Project development record through transport
+        run: |
+          mncds validate examples/mncds-0.2-alpha/language-span-fix.development-record.json --json > /tmp/mncds-report.json
+          python3 mncs-actions/adapters/mncds_adapter.py --input /tmp/mncds-report.json --output /tmp/mncds-check.json --check-id mncds-development-record --provider mncds --contract-revision 0.2-alpha.1 --subject-repository epi13/machine-native-complexity-development-specification --subject-commit "$GITHUB_SHA"
+          python3 -c "import json, os; check = json.load(open('/tmp/mncds-check.json')); assert check['verdict'] == 'PASS', check; assert check['subject']['commit'] == os.environ['GITHUB_SHA'], check; print('mncds-development-record -> ' + check['verdict'])"
