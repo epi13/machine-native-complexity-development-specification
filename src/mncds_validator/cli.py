@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .errors import MncdsError
 from .mncds import validate_development_record
+from .obligations import ObligationNoClaimError, evaluate_obligations
 
 MNCDS_VERSION = "0.1-rc.1"
 MNCDS_SCHEMA_VERSION = "0.1-rc.1"
@@ -31,6 +32,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="return exit 3 for a valid record whose computed status is not PASS",
     )
     validate.add_argument("--json", action="store_true", help="emit machine-readable JSON")
+
+    obligations = subparsers.add_parser(
+        "evaluate-obligations", help="evaluate an obligation set for one subject"
+    )
+    obligations.add_argument("records", nargs="+", type=Path)
+    obligations.add_argument("--subject-repository", required=True)
+    obligations.add_argument("--subject-commit", required=True)
+    obligations.add_argument("--json", action="store_true", help="emit machine-readable JSON")
 
     version = subparsers.add_parser("version", help="print MNCDS validator version")
     version.add_argument("--json", action="store_true", help="emit machine-readable JSON")
@@ -57,6 +66,37 @@ def run(args: argparse.Namespace) -> int:
         if not report.valid:
             return 1
         return 3 if args.require_pass and report.computed_status != "PASS" else 0
+
+    if args.command == "evaluate-obligations":
+        import json as _json
+
+        records = []
+        for path in args.records:
+            if not path.is_file():
+                raise FileNotFoundError(path)
+            try:
+                record = _json.loads(path.read_text(encoding="utf-8"))
+            except _json.JSONDecodeError as exc:
+                raise ObligationNoClaimError(f"{path}: malformed JSON: {exc}") from exc
+            records.append(record)
+        try:
+            evaluation = evaluate_obligations(
+                records,
+                subject_repository=args.subject_repository,
+                subject_commit=args.subject_commit,
+            )
+        except ObligationNoClaimError as exc:
+            print(f"mncds: no claim: {exc}", file=sys.stderr)
+            return 2
+        if args.json:
+            print(_json.dumps(evaluation.as_dict(), indent=2, sort_keys=True))
+        else:
+            print(evaluation.verdict)
+            for key in evaluation.unresolved:
+                print(f"unresolved: {key}")
+            for key in evaluation.rejected:
+                print(f"rejected: {key}")
+        return 0 if evaluation.verdict == "PASS" else 3
 
     if args.command == "version":
         result = {

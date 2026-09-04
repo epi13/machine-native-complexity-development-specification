@@ -1,0 +1,15 @@
+{
+  "schema_version": "mncs-authority-map/0.1",
+  "authorities": {
+    "mncds-development-record": {
+      "provider": "mncds",
+      "authority": "machine-native-complexity-development-specification",
+      "repository": "epi13/machine-native-complexity-development-specification"
+    },
+    "mncds-obligations": {
+      "provider": "mncds",
+      "authority": "machine-native-complexity-development-specification",
+      "repository": "epi13/machine-native-complexity-development-specification"
+    }
+  }
+}

@@ -97,7 +97,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: epi13/mncs-actions
-          ref: 8cfc395d3596451b12fd121f7e6adfcc4b916fba
+          ref: 4b132651d50b31ae12f5f00c749ee1f32adb6322
           path: mncs-actions
           persist-credentials: false
           fetch-depth: 1
