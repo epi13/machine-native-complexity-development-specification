@@ -48,3 +48,25 @@ Before changing normative text or schemas:
 6. use an RFC for changes to normative meaning, governance, result aggregation, authority, release semantics, or interoperability contracts.
 
 A cleaner implementation is not by itself permission to change the standard.
+
+## MNCS agent execution contract
+
+This repository owns **pressure semantics** in the ecosystem authority table
+(MNCDS DevelopmentPressure vocabulary; rights mncs-rights-provenance,
+coordination MNCS-Commons, language capability mncs-language, assurance
+mncs-forge-mcp, transport mncs-actions) and adopts the ecosystem agent
+contract bound in mncs-actions (`AGENTS.md` there) with the language mirror
+in mncs-language. Enforced by `tests/test_agent_contract.py`: every path
+named below must exist.
+
+- DevelopmentPressure records are observations with explicit
+  evidence-provider, semantic-authority, remediation-target, and lifecycle
+  roles. Creating pressure here never authorizes a change in an owning
+  repository and never closes an obligation: only development work with
+  evidence resolves, and only boundary policy tolerates.
+- Normative vocabulary changes follow the RFC path in this file's checklist
+  above; owner repositories consume the vocabulary without a second issue
+  taxonomy.
+- This repository currently carries no MNCS conformance badge in its
+  readme; do not add a decorative one. A future badge must render the
+  evidence-driven verdict and must not overstate what is proven.
