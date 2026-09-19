@@ -1,0 +1,30 @@
+{
+  "schema_version": "mncs-family.repository-manifest/v0alpha1",
+  "repository": "mncds",
+  "revision": 1,
+  "manifest_location": "in-repository",
+  "authority": {
+    "note": "MNCDS owns development-process, pressure, candidate, evidence-flow, selection, release, and retirement semantics; it does not own MNCS language or repository implementation semantics."
+  },
+  "organization": {
+    "layout": "mncs.repository-layout/1",
+    "surfaces": [
+      {"path": "spec/", "class": "canonical", "authority": "mncds"},
+      {"path": "schemas/", "class": "canonical", "authority": "mncds"},
+      {"path": "rfcs/", "class": "reference", "note": "Human-readable design records remain durable artifacts."},
+      {"path": "implementations/mncs/", "class": "canonical", "note": "Executable process kernels where present."}
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {"contract": "development-record-schema", "version": "0.1-rc.1", "kind": "specification", "stability": "stable", "fingerprint_sources": ["schemas/mncds-development-record-0.1.schema.json", "conformance/"]},
+      {"contract": "concept-experiment-bindings", "version": "0.2-alpha", "kind": "binding-doc", "stability": "experimental", "fingerprint_sources": ["docs/concept-experiment-bindings.md"]}
+    ],
+    "consumes": [
+      {"contract": "mncs.normative-specification", "envelope": {"op": "any"}, "required": false}
+    ],
+    "tests": [
+      {"test": "mncds-tests", "covers": ["development-record-schema", "concept-experiment-bindings"], "obligation": "self", "command": {"argv": ["python3", "-m", "pytest", "-q"]}}
+    ]
+  }
+}
