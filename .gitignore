@@ -3,7 +3,9 @@ __pycache__/
 .venv/
 venv/
 .pytest_cache/
-.mncs/
+.mncs/*
+!.mncs/
+!.mncs/project.json
 .ruff_cache/
 .mypy_cache/
 .coverage

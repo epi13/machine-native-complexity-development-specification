@@ -67,6 +67,15 @@ named below must exist.
 - Normative vocabulary changes follow the RFC path in this file's checklist
   above; owner repositories consume the vocabulary without a second issue
   taxonomy.
+- At agent entry, establish the current `mncs-language` capability identity
+  and Commons architecture identity through the bounded Language Service
+  family context when available. Query existing language capabilities and
+  Commons pressures before writing host-language semantic scaffolding; repair
+  the owning reusable layer before continuing where practical.
+- Repository-local declarations use the Standard-owned
+  `mncs-family.repository-manifest/v0alpha1` contract. MNCDS may define
+  development obligations around conformance, but it does not take ownership
+  of that manifest schema or of sibling implementation semantics.
 - This repository currently carries no MNCS conformance badge in its
   readme; do not add a decorative one. A future badge must render the
   evidence-driven verdict and must not overstate what is proven.
