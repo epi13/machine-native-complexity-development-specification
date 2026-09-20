@@ -1,0 +1,249 @@
+mncs 0.18;
+
+// MNCDS verification-machinery lifecycle kernel.
+//
+// The JSON Schema remains the normative interchange shape. This module owns
+// the deterministic transition and invariant checks used by native family
+// tooling; file/schema loading is still an external adapter boundary.
+module mncds.verification_machinery_lifecycle;
+
+use mncs.std.application.v1;
+
+enum MachineryKind { migration_parity, pressure_reproducer, differential_oracle, compatibility_fallback }
+enum LifecycleState { active, cutover_pending, canonical, reference_only, scheduled, retired }
+enum RetirementDecision { delete, retain_reference, schedule_exhaustive, retain_fallback }
+
+record LifecycleRequest {
+    schema_version: [byte; up_to 64],
+    machinery_kind: MachineryKind,
+    current_state: LifecycleState,
+    next_state: LifecycleState,
+    canonical_authority: [byte; up_to 128],
+    owning_regression: [byte; up_to 128],
+    workaround_removed: bool,
+    ordinary_verification: bool,
+    cutover_declared: bool,
+    parity_established: bool,
+    retirement_decision: RetirementDecision,
+    replacement_identity: [byte; up_to 128],
+    historical_identity: [byte; up_to 128]
+}
+
+record LifecycleResult {
+    schema_version: [byte; up_to 64],
+    valid: bool,
+    transition_allowed: bool,
+    ordinary_verification_allowed: bool,
+    ownership_valid: bool,
+    retirement_valid: bool,
+    reason: [byte; up_to 256]
+}
+
+fn request_schema() -> (result: [byte; up_to 64]) {
+    return [109, 110, 99, 100, 115, 46, 118, 101, 114, 105, 102, 105, 99, 97, 116, 105, 111, 110, 45, 109, 97, 99, 104, 105, 110, 101, 114, 121, 45, 108, 105, 102, 101, 99, 121, 99, 108, 101, 45, 107, 101, 114, 110, 101, 108, 45, 114, 101, 113, 117, 101, 115, 116, 47, 49];
+}
+
+fn result_schema() -> (result: [byte; up_to 64]) {
+    return [109, 110, 99, 100, 115, 46, 118, 101, 114, 105, 102, 105, 99, 97, 116, 105, 111, 110, 45, 109, 97, 99, 104, 105, 110, 101, 114, 121, 45, 108, 105, 102, 101, 99, 121, 99, 108, 101, 45, 107, 101, 114, 110, 101, 108, 47, 49];
+}
+
+fn terminal_state(value: LifecycleState) -> (result: bool) {
+    return match value {
+        LifecycleState.active => false,
+        LifecycleState.cutover_pending => false,
+        LifecycleState.canonical => false,
+        LifecycleState.reference_only => true,
+        LifecycleState.scheduled => true,
+        LifecycleState.retired => true
+    };
+}
+
+fn ordinary_allowed(value: LifecycleState) -> (result: bool) {
+    return !terminal_state(value);
+}
+
+fn transition_allowed(current: LifecycleState, target: LifecycleState) -> (result: bool) {
+    return match current {
+        LifecycleState.active => match target {
+            LifecycleState.active => true,
+            LifecycleState.cutover_pending => true,
+            LifecycleState.canonical => false,
+            LifecycleState.reference_only => false,
+            LifecycleState.scheduled => false,
+            LifecycleState.retired => false
+        },
+        LifecycleState.cutover_pending => match target {
+            LifecycleState.active => false,
+            LifecycleState.cutover_pending => true,
+            LifecycleState.canonical => true,
+            LifecycleState.reference_only => false,
+            LifecycleState.scheduled => false,
+            LifecycleState.retired => false
+        },
+        LifecycleState.canonical => match target {
+            LifecycleState.active => false,
+            LifecycleState.cutover_pending => false,
+            LifecycleState.canonical => true,
+            LifecycleState.reference_only => true,
+            LifecycleState.scheduled => true,
+            LifecycleState.retired => true
+        },
+        LifecycleState.reference_only => match target {
+            LifecycleState.active => false,
+            LifecycleState.cutover_pending => false,
+            LifecycleState.canonical => false,
+            LifecycleState.reference_only => true,
+            LifecycleState.scheduled => true,
+            LifecycleState.retired => true
+        },
+        LifecycleState.scheduled => match target {
+            LifecycleState.active => false,
+            LifecycleState.cutover_pending => false,
+            LifecycleState.canonical => false,
+            LifecycleState.reference_only => false,
+            LifecycleState.scheduled => true,
+            LifecycleState.retired => true
+        },
+        LifecycleState.retired => match target {
+            LifecycleState.active => false,
+            LifecycleState.cutover_pending => false,
+            LifecycleState.canonical => false,
+            LifecycleState.reference_only => false,
+            LifecycleState.scheduled => false,
+            LifecycleState.retired => true
+        }
+    };
+}
+
+fn is_delete(value: RetirementDecision) -> (result: bool) {
+    return match value {
+        RetirementDecision.delete => true,
+        RetirementDecision.retain_reference => false,
+        RetirementDecision.schedule_exhaustive => false,
+        RetirementDecision.retain_fallback => false
+    };
+}
+
+fn is_reference_retirement(value: RetirementDecision) -> (result: bool) {
+    return match value {
+        RetirementDecision.delete => false,
+        RetirementDecision.retain_reference => true,
+        RetirementDecision.schedule_exhaustive => false,
+        RetirementDecision.retain_fallback => false
+    };
+}
+
+fn is_scheduled_retirement(value: RetirementDecision) -> (result: bool) {
+    return match value {
+        RetirementDecision.delete => false,
+        RetirementDecision.retain_reference => false,
+        RetirementDecision.schedule_exhaustive => true,
+        RetirementDecision.retain_fallback => false
+    };
+}
+
+fn is_retired_decision(value: RetirementDecision) -> (result: bool) {
+    return match value {
+        RetirementDecision.delete => true,
+        RetirementDecision.retain_reference => true,
+        RetirementDecision.schedule_exhaustive => false,
+        RetirementDecision.retain_fallback => true
+    };
+}
+
+fn ownership_valid(request: LifecycleRequest) -> (result: bool) {
+    let has_owner: bool = request.owning_regression.len > 0;
+    let has_cutover: bool = request.cutover_declared && request.parity_established;
+    return match request.machinery_kind {
+        MachineryKind.migration_parity => has_cutover,
+        MachineryKind.pressure_reproducer => has_owner,
+        MachineryKind.differential_oracle => true,
+        MachineryKind.compatibility_fallback => true
+    };
+}
+
+fn retirement_valid(request: LifecycleRequest) -> (result: bool) {
+    if !terminal_state(request.next_state) {
+        return true;
+    }
+    let decision_matches: bool = match request.next_state {
+        LifecycleState.reference_only => is_reference_retirement(request.retirement_decision),
+        LifecycleState.scheduled => is_scheduled_retirement(request.retirement_decision),
+        LifecycleState.retired => is_retired_decision(request.retirement_decision),
+        LifecycleState.active => true,
+        LifecycleState.cutover_pending => true,
+        LifecycleState.canonical => true
+    };
+    let replacement_bound: bool = is_delete(request.retirement_decision)
+        || request.replacement_identity.len > 0
+        || request.historical_identity.len > 0;
+    let pressure_cutover: bool = match request.machinery_kind {
+        MachineryKind.pressure_reproducer => request.owning_regression.len > 0 && request.workaround_removed,
+        MachineryKind.migration_parity => true,
+        MachineryKind.differential_oracle => true,
+        MachineryKind.compatibility_fallback => true
+    };
+    return decision_matches && replacement_bound && pressure_cutover;
+}
+
+fn validation_reason(
+    transition: bool,
+    ordinary_consistent: bool,
+    authority_present: bool,
+    ownership: bool,
+    retirement: bool
+) -> (result: [byte; up_to 256]) {
+    if !transition {
+        return [105, 110, 118, 97, 108, 105, 100, 32, 108, 105, 102, 101, 99, 121, 99, 108, 101, 32, 116, 114, 97, 110, 115, 105, 116, 105, 111, 110];
+    }
+    if !ordinary_consistent {
+        return [116, 101, 114, 109, 105, 110, 97, 108, 32, 109, 97, 99, 104, 105, 110, 101, 114, 121, 32, 109, 117, 115, 116, 32, 98, 101, 32, 111, 114, 100, 105, 110, 97, 114, 121, 95, 118, 101, 114, 105, 102, 105, 99, 97, 116, 105, 111, 110, 61, 102, 97, 108, 115, 101];
+    }
+    if !authority_present {
+        return [99, 97, 110, 111, 110, 105, 99, 97, 108, 32, 97, 117, 116, 104, 111, 114, 105, 116, 121, 32, 105, 115, 32, 114, 101, 113, 117, 105, 114, 101, 100];
+    }
+    if !ownership {
+        return [109, 97, 99, 104, 105, 110, 101, 114, 121, 32, 111, 119, 110, 101, 114, 115, 104, 105, 112, 32, 105, 115, 32, 105, 110, 99, 111, 109, 112, 108, 108, 101, 116, 101];
+    }
+    if !retirement {
+        return [114, 101, 116, 105, 114, 101, 109, 101, 110, 116, 32, 99, 111, 110, 115, 116, 114, 97, 105, 110, 116, 32, 102, 97, 105, 108, 101, 100];
+    }
+    return [118, 97, 108, 105, 100];
+}
+
+fn validate(request: LifecycleRequest) -> (result: LifecycleResult) {
+    let transition: bool = transition_allowed(request.current_state, request.next_state);
+    let ordinary: bool = ordinary_allowed(request.next_state);
+    let ordinary_consistent: bool = ordinary || !request.ordinary_verification;
+    let authority_present: bool = request.canonical_authority.len > 0;
+    let ownership: bool = ownership_valid(request);
+    let retirement: bool = retirement_valid(request);
+    let valid: bool = transition && ordinary_consistent && authority_present && ownership && retirement;
+    let reason: [byte; up_to 256] = validation_reason(transition, ordinary_consistent, authority_present, ownership, retirement);
+    return LifecycleResult {
+        schema_version: request.schema_version,
+        valid: valid,
+        transition_allowed: transition,
+        ordinary_verification_allowed: ordinary,
+        ownership_valid: ownership,
+        retirement_valid: retirement,
+        reason: reason
+    };
+}
+
+fn lifecycle_app(context: ApplicationContext) -> (result: ApplicationExit)
+    capability mncds_artifact
+    effect structured_read authorized_by mncds_artifact
+    effect structured_write authorized_by mncds_artifact
+{
+    if !context_is_bounded(context) || context.argv_count < 2 {
+        return failure([97, 114, 103, 118, 32, 114, 101, 113, 117, 105, 114, 101, 115, 32, 50, 32, 108, 105, 102, 101, 99, 121, 99, 108, 101, 32, 112, 97, 116, 104, 115], 2);
+    }
+    let request: LifecycleRequest = structured_read(context.argv[0], request_schema());
+    let result: LifecycleResult = validate(request);
+    let published: u64 = structured_write(context.argv[1], result_schema(), result);
+    if published == 0 {
+        return failure([108, 105, 102, 101, 99, 121, 99, 108, 101, 32, 112, 117, 98, 108, 105, 115, 104, 32, 102, 97, 105, 108, 101, 100], 3);
+    }
+    return success([]);
+}

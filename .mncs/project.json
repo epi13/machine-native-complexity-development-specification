@@ -1,7 +1,7 @@
 {
   "schema_version": "mncs-family.repository-manifest/v0alpha1",
   "repository": "mncds",
-  "revision": 1,
+  "revision": 2,
   "manifest_location": "in-repository",
   "authority": {
     "note": "MNCDS owns development-process, pressure, candidate, evidence-flow, selection, release, and retirement semantics; it does not own MNCS language or repository implementation semantics."
@@ -16,7 +16,9 @@
       {"path": "spec/", "class": "canonical", "authority": "mncds"},
       {"path": "schemas/", "class": "canonical", "authority": "mncds"},
       {"path": "rfcs/", "class": "reference", "note": "Human-readable design records remain durable artifacts."},
-      {"path": "implementations/mncs/", "class": "canonical", "note": "Executable process kernels where present."}
+      {"path": "implementations/mncs/", "class": "canonical", "note": "Executable process kernels where present."},
+      {"path": "native/mncds/verification_machinery_lifecycle.mncs", "class": "canonical", "authority": "mncds", "note": "Native transition/invariant kernel for verification-machinery lifecycle records."},
+      {"path": "native-applications/verification-machinery-lifecycle.json", "class": "host-boundary", "authority": "mncds", "note": "Structured artifact transport descriptor for the native lifecycle kernel.", "classification": {"authority": "none", "lifecycle": "active", "boundary_kind": "compiler-bootstrap", "semantic_role": "platform-adapter"}}
     ]
   },
   "contracts": {
@@ -28,7 +30,7 @@
       {"contract": "mncs.normative-specification", "envelope": {"op": "any"}, "required": false}
     ],
     "tests": [
-      {"test": "mncds-tests", "covers": ["development-record-schema", "concept-experiment-bindings"], "obligation": "self", "command": {"argv": ["python3", "-m", "pytest", "-q"]}}
+      {"test": "mncds-tests", "covers": ["development-record-schema", "concept-experiment-bindings", "verification-machinery-lifecycle-kernel"], "obligation": "self", "command": {"argv": ["python3", "-m", "pytest", "-q"]}}
     ]
   }
 }

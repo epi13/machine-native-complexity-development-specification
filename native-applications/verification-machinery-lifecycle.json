@@ -1,0 +1,12 @@
+{
+  "schema_version": "mncs.native-application/1",
+  "application_identity": "mncds.verification-machinery-lifecycle",
+  "source": "../native/mncds/verification_machinery_lifecycle.mncs",
+  "module": "mncds.verification_machinery_lifecycle",
+  "entry_function": "lifecycle_app",
+  "profile": "0.18",
+  "interface_identity": "ac7dcccc431cdfdb2406fb39e4d28b147828a65c75c16b19d38826049321c024",
+  "libraries": ["../../mncs-language/library"],
+  "environment_keys": [],
+  "required_capabilities": ["mncds_artifact"]
+}

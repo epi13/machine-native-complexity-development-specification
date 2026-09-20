@@ -11,7 +11,7 @@
       "lifecycle": "permanent",
       "scope": "local",
       "subjects": ["development-record-schema", "verification-machinery-lifecycle"],
-      "invalidation_dependencies": ["schemas/mncds-development-record-0.1.schema.json", "schemas/mncds-verification-machinery-lifecycle-0.1.schema.json"],
+      "invalidation_dependencies": ["schemas/mncds-development-record-0.1.schema.json", "schemas/mncds-verification-machinery-lifecycle-0.1.schema.json", "native/mncds/verification_machinery_lifecycle.mncs", "native-applications/verification-machinery-lifecycle.json"],
       "executor": {
         "provider": "mncds",
         "kind": "compile_experiment",
