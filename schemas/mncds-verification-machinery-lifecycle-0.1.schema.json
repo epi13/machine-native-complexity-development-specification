@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mncs.dev/schema/mncds/0.1/verification-machinery-lifecycle.schema.json",
+  "title": "MNCDS Verification Machinery Lifecycle 0.1",
+  "description": "Experimental interoperability record for the lifecycle of migration parity, pressure reproducers, differential oracles, and explicit compatibility fallbacks. It records development machinery status; it is not an MNCS conformity verdict.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "machinery_identity",
+    "machinery_kind",
+    "state",
+    "canonical_authority",
+    "ordinary_verification",
+    "evidence_refs",
+    "retirement"
+  ],
+  "properties": {
+    "schema_version": {"const": "mncds.verification-machinery-lifecycle/0.1"},
+    "machinery_identity": {"type": "string", "minLength": 1},
+    "machinery_kind": {
+      "enum": ["migration_parity", "pressure_reproducer", "differential_oracle", "compatibility_fallback"]
+    },
+    "state": {
+      "enum": ["active", "cutover_pending", "canonical", "reference_only", "scheduled", "retired"]
+    },
+    "canonical_authority": {"type": "string", "minLength": 1},
+    "owning_regression": {"type": "string", "minLength": 1},
+    "ordinary_verification": {"type": "boolean"},
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "cutover": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "parity_established"],
+      "properties": {
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "parity_established": {"type": "boolean"},
+        "canonical_identity": {"type": "string", "minLength": 1}
+      }
+    },
+    "retirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "reason"],
+      "properties": {
+        "decision": {"enum": ["delete", "retain_reference", "schedule_exhaustive", "retain_fallback"]},
+        "reason": {"type": "string", "minLength": 1},
+        "replacement_identity": {"type": "string", "minLength": 1},
+        "historical_identity": {"type": "string", "minLength": 1}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"enum": ["reference_only", "scheduled", "retired"]}}},
+      "then": {"properties": {"ordinary_verification": {"const": false}}}
+    },
+    {
+      "if": {"properties": {"machinery_kind": {"const": "pressure_reproducer"}}},
+      "then": {"required": ["owning_regression"]}
+    },
+    {
+      "if": {"properties": {"machinery_kind": {"const": "migration_parity"}}},
+      "then": {"required": ["cutover"]}
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "mncs-family.verification-obligation-inventory/v1",
+  "repository": "mncds",
+  "revision": 1,
+  "obligations": [
+    {
+      "identity": "mncds.development-record.conformance",
+      "title": "Development records conform to MNCDS lifecycle semantics",
+      "guarantee_domain": "integration",
+      "evidence_role": "conformance",
+      "lifecycle": "permanent",
+      "scope": "local",
+      "subjects": ["development-record-schema", "verification-machinery-lifecycle"],
+      "invalidation_dependencies": ["schemas/mncds-development-record-0.1.schema.json", "schemas/mncds-verification-machinery-lifecycle-0.1.schema.json"],
+      "executor": {
+        "provider": "mncds",
+        "kind": "compile_experiment",
+        "entrypoint": "tests/test_verification_machinery_lifecycle.py"
+      },
+      "evidence_identity": {
+        "subject_fields": ["record_identity"],
+        "definition_fields": ["schema_identity"],
+        "execution_fields": ["validation_identity"]
+      }
+    }
+  ]
+}

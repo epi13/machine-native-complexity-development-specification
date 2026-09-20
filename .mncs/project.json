@@ -6,6 +6,10 @@
   "authority": {
     "note": "MNCDS owns development-process, pressure, candidate, evidence-flow, selection, release, and retirement semantics; it does not own MNCS language or repository implementation semantics."
   },
+  "verification": {
+    "schema_version": "mncs-family.verification-obligation-inventory/v1",
+    "obligation_inventory": ".mncs/verification-obligations.json"
+  },
   "organization": {
     "layout": "mncs.repository-layout/1",
     "surfaces": [
