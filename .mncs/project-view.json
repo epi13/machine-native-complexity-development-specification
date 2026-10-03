@@ -44,7 +44,7 @@
   "purpose": "MNCDS owns development-process, pressure, candidate, evidence-flow, selection, release, and retirement semantics; it does not own MNCS language or repository implementation semantics.",
   "repository": "mncds",
   "schema_version": "mncs.project-view/1",
-  "source_identity": "sha256:f1e26cd4f9f4bf1c0185cfda2c6d28779106bbdb6687524e5e8490ced695ba3c",
+  "source_identity": "sha256:aee28a268d9ffe51851a0d2f2bcd31cd697bbb79c7f80d8b2e0e2fa0f5b899b3",
   "structure": {
     "layout": "mncs.repository-layout/1",
     "surfaces": [
