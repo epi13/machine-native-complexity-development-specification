@@ -1,5 +1,11 @@
 # MNCDS Repository Roadmap
 
+<!-- MNCS:generated:begin -->
+## Evidence-bound roadmap
+
+- **complete** — Declared ambient projection surfaces satisfy their contract (`mncds:projection-conformance`)
+<!-- MNCS:generated:end -->
+
 Statuses are evidence-based as of 2026-08-25. An item is marked complete only
 when the repository itself proves it (committed artifacts, tests, or CI).
 

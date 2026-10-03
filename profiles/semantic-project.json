@@ -1,0 +1,22 @@
+{
+  "schema_version": "mncds.project-structure-profile/1",
+  "profile": "mncs.semantic-project",
+  "required_paths": [
+    ".mncs/project.json",
+    ".mncs/projections.json",
+    ".mncs/project-state.json"
+  ],
+  "artifact_classes": [
+    "authoritative",
+    "derived",
+    "mixed",
+    "interpretation"
+  ],
+  "rules": [
+    "Authoritative inputs require explicit semantic ownership and must not be overwritten by projections.",
+    "Derived targets require a declaration, deterministic interpretation, validation and provenance.",
+    "Mixed targets require unambiguous boundaries and exact ownership of projected bytes.",
+    "Interpretations consume canonical semantic state; outward artifacts cannot establish evidence or completion.",
+    "Directory roles and canonical paths come from the owning repository manifest organization, without inferred directory-name conventions."
+  ]
+}

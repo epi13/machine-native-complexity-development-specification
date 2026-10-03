@@ -1,5 +1,19 @@
 # Machine-Native Complexity Development Specification
 
+<!-- MNCS:generated:begin -->
+## Project entry
+
+MNCDS owns development-process, pressure, candidate, evidence-flow, selection, release, and retirement semantics; it does not own MNCS language or repository implementation semantics.
+
+Declared capabilities (declarations do not establish execution health):
+
+- `concept-experiment-bindings/0.2-alpha` — binding-doc (experimental)
+- `development-record-schema/0.1-rc.1` — specification (stable)
+- `project-structure-profile/1` — opt-in-development-structure-profile (experimental)
+
+Semantic sources and ownership: `.mncs/projections.json`.
+<!-- MNCS:generated:end -->
+
 **MNCDS** is an open experimental specification for evidence-governed development of machine-native implementations.
 
 MNCDS governs how machine-native implementations are created, evaluated, selected, released, monitored, regenerated, replaced, and retired. It is a companion to the [Machine-Native Complexity Standard (MNCS)](https://github.com/epi13/machine-native-complexity-standard), but it is **independently versioned, governed, and released**.
