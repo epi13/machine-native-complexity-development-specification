@@ -5,7 +5,7 @@
   "module": "mncds.verification_machinery_lifecycle",
   "entry_function": "lifecycle_app",
   "profile": "0.18",
-  "interface_identity": "ac7dcccc431cdfdb2406fb39e4d28b147828a65c75c16b19d38826049321c024",
+  "interface_identity": "b7df5e318a30c36fd3b74f46c2ee60926fc5c1fa818260e838838f5e04bd77ec",
   "libraries": ["../../mncs-language/library"],
   "environment_keys": [],
   "required_capabilities": ["mncds_artifact"]
